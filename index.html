@@ -80,13 +80,12 @@
         ::-webkit-scrollbar-thumb:hover { background: rgba(13, 148, 136, 0.6); }
 
         html { scroll-behavior: smooth; }
-    </style>
+</style>
 <style>
-  .slider, .hero, section.relative {
-    position: relative !important;
-    overflow: hidden !important;
+  section.relative .grid {
+    display: block !important;
   }
-  .slider img, .hero img, .carousel img {
+  section.relative img {
     position: absolute !important;
     inset: 0 !important;
     width: 100% !important;
@@ -95,6 +94,7 @@
     z-index: -1 !important;
   }
 </style>
+
 </head>
 <body class="bg-deepNight text-slate-100 font-sans min-h-screen relative overflow-x-hidden selection:bg-tealGreen selection:text-white">
 
