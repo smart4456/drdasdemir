@@ -81,8 +81,31 @@
 
         html { scroll-behavior: smooth; }
 <style>
-  section.relative .grid { display: block !important; }
-  section.relative img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
+  #slider-container,
+  #slides-wrapper,
+  #slides-wrapper > div,
+  #slides-wrapper > div > div:last-child,
+  #slides-wrapper > div > div:last-child * {
+    position: static !important;
+  }
+  #slides-wrapper > div,
+  #slides-wrapper > div > div:last-child {
+    display: block !important;
+  }
+  #slides-wrapper > div > div:first-child,
+  #slider-dots {
+    position: relative !important;
+    z-index: 10 !important;
+  }
+  #slides-wrapper img {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 0 !important;
+    z-index: 1 !important;
+  }
 </style>
 
 </head>
