@@ -81,21 +81,18 @@
 
         html { scroll-behavior: smooth; }
 <style>
-  section.relative {
+  section.relative > div {
     max-width: 100% !important;
+    width: 100% !important;
     margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
     border-radius: 0 !important;
   }
-  section.relative .grid {
-    display: block !important;
-  }
   section.relative img {
-    position: absolute !important;
-    inset: 0 !important;
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
-    z-index: -1 !important;
   }
 </style>
 
