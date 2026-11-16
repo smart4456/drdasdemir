@@ -198,10 +198,10 @@
             <div class="absolute -top-20 -right-20 w-80 h-80 bg-tealGreen/25 rounded-full filter blur-[90px]"></div>
             <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-oceanBlue/25 rounded-full filter blur-[90px]"></div>
 
-            <div id="slider-container" class="relative z-10 min-h-[300px] flex flex-col justify-between">
-                <div id="slides-wrapper"></div>
-                <div id="slider-dots" class="flex items-center space-x-3 pt-8"></div>
-            </div>
+            <div id="slider-container" class="z-10 min-h-[300px] flex flex-col justify-between">
+    <div id="slides-wrapper"></div>
+    <div id="slider-dots" class="relative z-10 flex items-center space-x-3 pt-8"></div>
+</div>
         </section>
 
         <!-- Aktif Kategori Filtre Çubuğu (Yalnızca kategori seçildiğinde görünür) -->
@@ -525,13 +525,13 @@
                 const c = getSlideColorClasses(s.renk);
                 const hiddenClass = idx === 0 ? "" : "hidden";
                 const imageHtml = s.resim
-                    ? `<div class="mt-4 lg:mt-0 lg:w-80 shrink-0"><img src="${escapeHtml(s.resim)}" alt="${escapeHtml(s.baslik)}" class="w-full h-52 object-cover rounded-2xl border border-white/20 shadow-xl"></div>`
-                    : "";
+    ? `<img src="${escapeHtml(s.resim)}" alt="" class="absolute inset-0 w-full h-full object-cover z-0"><div class="absolute inset-0 bg-gradient-to-r from-[#030712]/85 via-[#030712]/50 to-transparent z-0"></div>`
+    : "";
 
                 return `
                     <div class="slide-item ${hiddenClass} transition-opacity duration-500" data-index="${idx}">
                         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
-                            <div class="space-y-6 flex-1">
+                            <div class="relative z-10 space-y-6 flex-1">
                                 <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full liquid-glass border border-white/20 text-xs font-semibold ${c.badgeText}">
                                     <i class="fa-solid ${escapeHtml(s.ikon || 'fa-dna')} ${c.iconText}"></i>
                                     <span>${escapeHtml(s.etiket)}</span>
