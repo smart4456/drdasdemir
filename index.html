@@ -81,13 +81,20 @@
 
         html { scroll-behavior: smooth; }
     </style>
-.slider img, .hero-banner img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
+<style>
+  .slider, .hero, section.relative {
+    position: relative !important;
+    overflow: hidden !important;
+  }
+  .slider img, .hero img, .carousel img {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    z-index: -1 !important;
+  }
+</style>
 </head>
 <body class="bg-deepNight text-slate-100 font-sans min-h-screen relative overflow-x-hidden selection:bg-tealGreen selection:text-white">
 
