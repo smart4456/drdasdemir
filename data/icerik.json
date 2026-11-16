@@ -1,0 +1,110 @@
+{
+  "ayarlar": {
+    "siteBaslik": "Dr. İsak Daşdemir | Tıp, Bilim, Düşünce ve Edebiyat",
+    "footerMetni": "© 2026 Dr. İsak Daşdemir • Tıp, Bilim, Düşünce ve Edebiyat",
+    "iletisimAciklama": "Akademik çalışmalar, görüş, soru ve işbirlikleri için formu doldurabilirsiniz.",
+    "web3formsKey": ""
+  },
+  "slaytlar": [
+    {
+      "etiket": "TIP • BİLİM • DÜŞÜNCE • EDEBİYAT",
+      "ikon": "fa-dna",
+      "renk": "glassBlue",
+      "baslik": "Bilimin Kesinliği ile Edebiyatın ve Düşüncenin",
+      "vurguBaslik": "Derinliği Arasında",
+      "aciklama": "Klinik pratikler, güncel tıbbi literatür ve Nobel'e aday bilimsel keşiflerin yanı sıra; sosyal, kültürel ve siyasal öngörüler üzerine notlar.",
+      "butonMetni": "Yazıları Keşfet",
+      "resim": "",
+      "hedefBolum": "klinik"
+    },
+    {
+      "etiket": "GENETİK • NOBEL KEŞİFLERİ",
+      "ikon": "fa-microscope",
+      "renk": "tealGreen",
+      "baslik": "Genomik Verilerin Hekimlik Pratiğine",
+      "vurguBaslik": "Entegrasyonu",
+      "aciklama": "Hücresel gençleştirme mekanizmaları, yaşa bağlı kronik hastalıkların önlenmesinde açılan yeni ufuklar ve Nobel komitesinin radarındaki yenilikler.",
+      "butonMetni": "Analizi İncele",
+      "resim": "",
+      "hedefBolum": "klinik"
+    },
+    {
+      "etiket": "SOSYAL • ETİK • DİJİTAL TOPLUM",
+      "ikon": "fa-globe",
+      "renk": "oceanBlue",
+      "baslik": "Yapay Zeka Çağında Modern Toplumun",
+      "vurguBaslik": "Yeni Kırılganlıkları",
+      "aciklama": "Hızlanan bilimsel dönüşüm karşısında küresel sağlık politikaları, etik sınırlar ve insanın anlam arayışı üzerine derinlemesine değerlendirmeler.",
+      "butonMetni": "Toplumsal Analizler",
+      "resim": "",
+      "hedefBolum": "sosyal"
+    },
+    {
+      "etiket": "EDEBİYAT • SANAT • İNSAN",
+      "ikon": "fa-feather",
+      "renk": "purple",
+      "baslik": "Hekim Yazarların Kaleminden",
+      "vurguBaslik": "İnsan Ruhunun Anatomisi",
+      "aciklama": "Çehov'dan Bulgakov'a, stetoskop ile kalemi aynı masada buluşturan hekimlerin edebiyat dünyasına bıraktığı benzersiz insani derinlik.",
+      "butonMetni": "Seçkileri Oku",
+      "resim": "",
+      "hedefBolum": "sosyal"
+    }
+  ],
+  "yazilar": [
+    {
+      "baslik": "Klinik Pratikler ve Güncel Yaklaşımlar",
+      "bolum": "bilim",
+      "kategori": "Klinik Pratikler",
+      "tarih": "16 Kasım 2026",
+      "resim": "",
+      "ozet": "Klinik pratikler, güncel tıbbi literatür ve bilimsel keşiflerin günlük hekimlik uygulamalarına entegrasyonu ve insan sağlığına etkileri.",
+      "icerik": "Modern hekimlik pratiği, yalnızca tanı ve tedavi algoritmalarının uygulanmasından ibaret değildir; her hastanın biyolojik özgünlüğü ile güncel kanıta dayalı tıp verilerinin kesişiminde kurulan dinamik bir karar sürecidir.\n\n## Kanıttan Pratiğe Geçiş\n\nKlinik araştırmalarda elde edilen istatistiksel anlamlılık, hasta başı uygulamada her zaman aynı karşılığı bulmayabilir. Bu nedenle güncel literatürün eleştirel süzgeçten geçirilmesi ve cerrahi/klinik deneyimin verilerle dengelenmesi temel gerekliliktir.\n\n> İyi hekimlik, eldeki en yeni veriyi hastanın gerçekliğiyle buluşturabilme sanatıdır."
+    },
+    {
+      "baslik": "Nobel Tıp Ödülleri Analizi",
+      "bolum": "bilim",
+      "kategori": "Nobel Tıp Ödülleri Analizi",
+      "tarih": "14 Kasım 2026",
+      "resim": "",
+      "ozet": "Genomik verilerin hekimlik pratiğine entegrasyonu, hücresel düzenleme mekanizmaları ve insan sağlığına etkileri üzerine analizler.",
+      "icerik": "Nobel Fizyoloji veya Tıp Ödülleri, çoğu zaman temel bilim laboratuvarlarında yıllar süren sabırlı gözlemlerin insan sağlığında yarattığı paradigma değişimlerini taçlandırır.\n\n## Genomik ve Hücresel Düzeyde Yeni Ufuklar\n\nGenetik bilginin yalnızca kalıtsal hastalıkların teşhisinde değil, bireyselleştirilmiş tedavi protokollerinin oluşturulmasında kullanılması klinik tıbbın yönünü kökten değiştirmektedir."
+    },
+    {
+      "baslik": "Güncel Literatür Değerlendirmeleri",
+      "bolum": "bilim",
+      "kategori": "Güncel Literatür",
+      "tarih": "14 Kasım 2026",
+      "resim": "",
+      "ozet": "Uluslararası hakemli dergilerde öne çıkan çalışmalar, metodolojik analizler ve klinik karar süreçlerine yansımaları.",
+      "icerik": "Tıp literatüründe her yıl yayımlanan yüz binlerce makale arasından klinik değeri yüksek, metodolojik açıdan sağlam çalışmaları ayırt etmek giderek daha kritik hale gelmektedir.\n\n- Çok merkezli randomize kontrollü çalışmaların gerçek yaşam verileriyle karşılaştırılması\n- Minimal invaziv yöntemlerin uzun dönem onkolojik ve fonksiyonel sonuçları\n- Yapay zeka destekli karar sistemlerinin tanısal doğruluk sınırları"
+    },
+    {
+      "baslik": "Biyoteknoloji Çağında Modern Toplumun Yeni Kırılganlıkları",
+      "bolum": "toplum_edebiyat",
+      "kategori": "Sosyal ve Kültürel Analiz",
+      "tarih": "19 Ekim 2026",
+      "resim": "",
+      "ozet": "Hızlanan bilimsel dönüşüm karşısında küresel sağlık politikaları, etik sınırlar ve insanın anlam arayışı.",
+      "icerik": "Biyoteknoloji ve yapay zeka alanındaki baş döndürücü ilerleme, insan ömrünü uzatırken toplumların etik, kültürel ve psikolojik dayanıklılığını yeni sınavlarla karşı karşıya bırakmaktadır.\n\nTeknolojik kapasitenin artışı her zaman toplumsal refah ve adaletle doğru orantılı ilerlemez. Bilimsel olanakların sınırları genişledikçe, insan onuru ve mahremiyeti merkezde tutan bir etik çerçeveye duyulan ihtiyaç da aynı ölçüde büyümektedir."
+    },
+    {
+      "baslik": "Bilim Diplomasisi ve Küresel Güç Dengelerinin Geleceği",
+      "bolum": "toplum_edebiyat",
+      "kategori": "Siyasal Öngörüler",
+      "tarih": "09 Ekim 2026",
+      "resim": "",
+      "ozet": "Stratejik üstünlüğün laboratuvarlar, biyoteknoloji altyapısı ve bilimsel üretim kapasitesi üzerinden tanımlanması.",
+      "icerik": "21. yüzyılda uluslararası güç dengeleri yalnızca geleneksel ekonomi ve diplomasi araçlarıyla değil, araştırma geliştirme ekosistemleri ve bilimsel üretim kapasitesiyle şekillenmektedir.\n\nSağlık teknolojileri, veri güvenliği ve temel bilim yatırımları artık ülkelerin stratejik bağımsızlığının en belirleyici unsurları arasında yer almaktadır."
+    },
+    {
+      "baslik": "Edebiyatın Evreni ve İnsan Ruhu",
+      "bolum": "toplum_edebiyat",
+      "kategori": "Deneme ve Seçkiler",
+      "tarih": "01 Ekim 2026",
+      "resim": "",
+      "ozet": "Çehov'dan Bulgakov'a hekimlerin edebiyat dünyasına bıraktığı insani derinlik ve gözlem gücü.",
+      "icerik": "Hekimlik ile edebiyat arasındaki kadim bağ, insanın en savunmasız anlarına tanıklık etme ortak paydasından beslenir. Anton Çehov'un satırlarındaki yalın gerçekçilik de Mihail Bulgakov'un keskin gözlemleri de klinik deneyimin insan ruhunu anlama çabasıyla birleşmesinden doğmuştur.\n\n> Tıp benim nikahlı karım, edebiyat ise sevgilimdir. — Anton Çehov"
+    }
+  ]
+}

@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Dr. İsak Daşdemir | Tıp, Bilim, Düşünce ve Edebiyat</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        deepNight: '#050b18',
+                        oceanBlue: '#0284c7',
+                        glassBlue: '#38bdf8',
+                        tealGreen: '#0d9488',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Liquid Glass (Cam Efekti) Stilleri */
+        .liquid-glass {
+            background: rgba(5, 11, 24, 0.68);
+            backdrop-filter: blur(24px) saturate(200%);
+            -webkit-backdrop-filter: blur(24px) saturate(200%);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.5),
+                inset 0 1px 2px rgba(255, 255, 255, 0.2),
+                inset 0 -2px 4px rgba(2, 132, 199, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .liquid-glass-hover:hover {
+            background: rgba(13, 148, 136, 0.25);
+            border-color: rgba(13, 148, 136, 0.5);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.6),
+                inset 0 1px 3px rgba(255, 255, 255, 0.3),
+                0 0 20px rgba(13, 148, 136, 0.3);
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.45; }
+            50% { transform: scale(1.15) translate(20px, -30px); opacity: 0.75; }
+        }
+
+        .bg-glow-1 { animation: pulseGlow 15s ease-in-out infinite; }
+        .bg-glow-2 { animation: pulseGlow 20s ease-in-out infinite reverse; }
+
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.25s ease-in-out;
+        }
+        .group:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050b18; }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(56, 189, 248, 0.3);
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(13, 148, 136, 0.6); }
+
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="bg-deepNight text-slate-100 font-sans min-h-screen relative overflow-x-hidden selection:bg-tealGreen selection:text-white">
+
+    <!-- Arka Plan Katmanları -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div class="absolute inset-0 bg-gradient-to-tr from-[#030712] via-[#050b18] to-[#042f2e]"></div>
+        <div class="absolute -top-40 -left-40 w-[40rem] h-[40rem] bg-oceanBlue/25 rounded-full filter blur-[150px] bg-glow-1"></div>
+        <div class="absolute top-1/3 -right-20 w-[45rem] h-[45rem] bg-tealGreen/20 rounded-full filter blur-[170px] bg-glow-2"></div>
+        <div class="absolute -bottom-32 left-1/3 w-[40rem] h-[40rem] bg-glassBlue/20 rounded-full filter blur-[160px] bg-glow-1"></div>
+    </div>
+
+    <!-- Bildirim Kutusu (Toast) -->
+    <div id="toast" class="fixed top-6 right-6 z-50 transform translate-x-[130%] transition-transform duration-300 ease-out">
+        <div class="liquid-glass px-5 py-3.5 rounded-2xl flex items-center space-x-3 text-sm shadow-2xl border border-tealGreen/40 max-w-sm">
+            <div id="toast-icon" class="w-8 h-8 shrink-0 rounded-xl bg-tealGreen/20 text-tealGreen flex items-center justify-center">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <div>
+                <p id="toast-title" class="font-semibold text-white">Bilgi</p>
+                <p id="toast-msg" class="text-slate-300 text-xs">İşlem tamamlandı.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Üst Navigasyon Menüsü -->
+    <header class="fixed top-4 left-0 right-0 z-40 px-4 sm:px-8">
+        <nav class="max-w-7xl mx-auto liquid-glass rounded-3xl px-6 py-4 flex items-center justify-between border border-white/15 shadow-2xl">
+            <a href="#" onclick="resetCategoryFilter()" class="flex items-center space-x-3 group">
+                <span class="font-bold text-xl tracking-tight bg-gradient-to-r from-white via-slate-200 to-glassBlue bg-clip-text text-transparent">
+                    Dr. İsak Daşdemir
+                </span>
+            </a>
+
+            <!-- Ana Menü -->
+            <div class="hidden md:flex items-center space-x-2">
+                <!-- Tıp ve Bilim -->
+                <div class="relative group">
+                    <button class="px-4 py-2 rounded-2xl text-sm font-medium text-slate-200 hover:text-white liquid-glass-hover flex items-center space-x-2 transition">
+                        <span>Tıp ve Bilim</span>
+                        <i class="fa-solid fa-chevron-down text-xs text-glassBlue group-hover:rotate-180 transition-transform"></i>
+                    </button>
+                    <div class="dropdown-menu absolute top-full left-0 mt-2 w-80 liquid-glass rounded-2xl p-2.5 shadow-2xl border border-white/20 flex flex-col space-y-1">
+                        <a href="#klinik" onclick="filterByCategory('Klinik Pratikler', 'klinik')" class="px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/10 transition flex flex-col">
+                            <span class="font-semibold text-white">Klinik Pratikler</span>
+                            <span class="text-xs text-slate-400">Klinik uygulamalar ve insan sağlığına etkileri.</span>
+                        </a>
+                        <a href="#klinik" onclick="filterByCategory('Güncel Literatür', 'klinik')" class="px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/10 transition flex flex-col">
+                            <span class="font-semibold text-white">Güncel Literatür</span>
+                            <span class="text-xs text-slate-400">Güncel tıbbi çalışmalar ve metodolojik analizler.</span>
+                        </a>
+                        <a href="#klinik" onclick="filterByCategory('Nobel Tıp Ödülleri Analizi', 'klinik')" class="px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/10 transition flex flex-col">
+                            <span class="font-semibold text-white">Nobel Tıp Ödülleri Analizi</span>
+                            <span class="text-xs text-slate-400">Genomik veriler ve Nobel keşifleri incelemesi.</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Düşünce ve Toplum -->
+                <div class="relative group">
+                    <button class="px-4 py-2 rounded-2xl text-sm font-medium text-slate-200 hover:text-white liquid-glass-hover flex items-center space-x-2 transition">
+                        <span>Düşünce ve Toplum</span>
+                        <i class="fa-solid fa-chevron-down text-xs text-glassBlue group-hover:rotate-180 transition-transform"></i>
+                    </button>
+                    <div class="dropdown-menu absolute top-full left-0 mt-2 w-72 liquid-glass rounded-2xl p-2.5 shadow-2xl border border-white/20 flex flex-col space-y-1">
+                        <a href="#sosyal" onclick="filterByCategory('Sosyal ve Kültürel Analiz', 'sosyal')" class="px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/10 transition flex flex-col">
+                            <span class="font-semibold text-white">Sosyal ve Kültürel Analiz</span>
+                            <span class="text-xs text-slate-400">Modern toplum, etik ve insan halleri</span>
+                        </a>
+                        <a href="#sosyal" onclick="filterByCategory('Siyasal Öngörüler', 'sosyal')" class="px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/10 transition flex flex-col">
+                            <span class="font-semibold text-white">Siyasal Öngörüler</span>
+                            <span class="text-xs text-slate-400">Küresel dönüşüm ve gelecek perspektifi</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Edebiyat -->
+                <div class="relative group">
+                    <button class="px-4 py-2 rounded-2xl text-sm font-medium text-slate-200 hover:text-white liquid-glass-hover flex items-center space-x-2 transition">
+                        <span>Edebiyat</span>
+                        <i class="fa-solid fa-chevron-down text-xs text-glassBlue group-hover:rotate-180 transition-transform"></i>
+                    </button>
+                    <div class="dropdown-menu absolute top-full left-0 mt-2 w-64 liquid-glass rounded-2xl p-2.5 shadow-2xl border border-white/20 flex flex-col space-y-1">
+                        <a href="#sosyal" onclick="filterByCategory('Deneme ve Seçkiler', 'sosyal')" class="px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/10 transition flex flex-col">
+                            <span class="font-semibold text-white">Deneme ve Seçkiler</span>
+                            <span class="text-xs text-slate-400">Edebiyat, sanat ve insana dair notlar</span>
+                        </a>
+                    </div>
+                </div>
+
+                <a href="#iletisim" class="px-4 py-2 rounded-2xl text-sm font-medium text-slate-200 hover:text-white liquid-glass-hover transition">İletişim</a>
+            </div>
+
+            <!-- Mobil Menü Butonu -->
+            <div class="flex items-center space-x-3">
+                <button onclick="toggleMobileMenu()" aria-label="Menüyü Aç" class="md:hidden w-10 h-10 rounded-2xl liquid-glass flex items-center justify-center text-slate-200">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobil Menü -->
+        <div id="mobile-menu" class="hidden max-w-7xl mx-auto mt-2 liquid-glass rounded-3xl p-4 md:hidden flex flex-col space-y-2 border border-white/15 shadow-2xl">
+            <a href="#klinik" onclick="resetCategoryFilter(); toggleMobileMenu();" class="px-4 py-3 rounded-xl bg-white/5 text-white font-medium text-sm">Tıp ve Bilim</a>
+            <a href="#sosyal" onclick="resetCategoryFilter(); toggleMobileMenu();" class="px-4 py-3 rounded-xl text-slate-300 hover:bg-white/5 text-sm">Düşünce ve Toplum</a>
+            <a href="#sosyal" onclick="filterByCategory('Deneme ve Seçkiler', 'sosyal'); toggleMobileMenu();" class="px-4 py-3 rounded-xl text-slate-300 hover:bg-white/5 text-sm">Edebiyat</a>
+            <a href="#iletisim" onclick="toggleMobileMenu()" class="px-4 py-3 rounded-xl text-slate-300 hover:bg-white/5 text-sm">İletişim</a>
+        </div>
+    </header>
+
+    <!-- Ana İçerik -->
+    <main class="relative z-10 pt-32 pb-24 px-4 sm:px-8 max-w-7xl mx-auto space-y-20">
+
+        <!-- Hero Slider Alanı -->
+        <section class="relative liquid-glass rounded-[2.5rem] p-8 sm:p-14 overflow-hidden border border-white/20 shadow-2xl">
+            <div class="absolute -top-20 -right-20 w-80 h-80 bg-tealGreen/25 rounded-full filter blur-[90px]"></div>
+            <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-oceanBlue/25 rounded-full filter blur-[90px]"></div>
+
+            <div id="slider-container" class="relative z-10 min-h-[300px] flex flex-col justify-between">
+                <div id="slides-wrapper"></div>
+                <div id="slider-dots" class="flex items-center space-x-3 pt-8"></div>
+            </div>
+        </section>
+
+        <!-- Aktif Kategori Filtre Çubuğu (Yalnızca kategori seçildiğinde görünür) -->
+        <div id="filter-banner" class="hidden liquid-glass px-6 py-4 rounded-2xl border border-tealGreen/40 flex items-center justify-between">
+            <div class="flex items-center space-x-3 text-sm">
+                <i class="fa-solid fa-filter text-tealGreen"></i>
+                <span class="text-slate-300">Seçili Kategori: <strong id="active-filter-name" class="text-white"></strong></span>
+            </div>
+            <button onclick="resetCategoryFilter()" class="px-4 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-medium text-white transition">
+                Tüm Yazıları Göster
+            </button>
+        </div>
+
+        <!-- Bölüm 1: Öne Çıkan Makale ve Analizler -->
+        <section id="klinik" class="space-y-10 scroll-mt-28">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white">Öne Çıkan Makale ve Analizler</h2>
+                    <p class="text-slate-400 text-sm mt-1">Klinik pratikler, Nobel analizleri ve güncel literatür.</p>
+                </div>
+            </div>
+
+            <div id="bilim-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+        </section>
+
+        <!-- Bölüm 2: Sosyal, Siyasal ve Edebiyat Seçkileri -->
+        <section id="sosyal" class="space-y-10 scroll-mt-28">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white">Sosyal, Siyasal ve Edebiyat Seçkileri</h2>
+                    <p class="text-slate-400 text-sm mt-1">Toplum, kültür ve edebi denemeler.</p>
+                </div>
+            </div>
+
+            <div id="toplum-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+        </section>
+
+        <!-- İletişim Bölümü -->
+        <section id="iletisim" class="liquid-glass p-8 sm:p-12 rounded-[2.5rem] border border-white/20 shadow-2xl scroll-mt-28">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div class="space-y-4">
+                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-tealGreen/20 text-tealGreen border border-tealGreen/30">İLETİŞİM</span>
+                    <h2 class="text-3xl font-bold text-white">Görüş, Soru ve İşbirlikleri İçin</h2>
+                    <p id="iletisim-desc" class="text-slate-300 text-sm leading-relaxed">
+                        Akademik çalışmalar ve mesajlarınız için formu doldurabilirsiniz.
+                    </p>
+                </div>
+                <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-4">
+                    <input type="text" name="name" required placeholder="Adınız Soyadınız" class="w-full px-5 py-3.5 rounded-2xl bg-white/5 border border-white/20 text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-tealGreen/50 transition">
+                    <input type="email" name="email" required placeholder="E-posta Adresiniz" class="w-full px-5 py-3.5 rounded-2xl bg-white/5 border border-white/20 text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-tealGreen/50 transition">
+                    <textarea name="message" rows="3" required placeholder="Mesajınız..." class="w-full px-5 py-3.5 rounded-2xl bg-white/5 border border-white/20 text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-tealGreen/50 transition"></textarea>
+                    <button id="contact-submit-btn" type="submit" class="w-full py-3.5 rounded-2xl bg-tealGreen hover:bg-tealGreen/80 text-white font-semibold text-sm shadow-lg transition">
+                        Gönder
+                    </button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Altbilgi (Footer) -->
+    <footer class="relative z-10 border-t border-white/10 py-10 px-4 sm:px-8 liquid-glass">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p id="footer-text" class="text-sm text-slate-400">&copy; 2026 Dr. İsak Daşdemir &bull; Tıp, Bilim, Düşünce ve Edebiyat</p>
+            <a href="/admin/" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-medium text-slate-300 hover:text-white transition flex items-center space-x-2">
+                <i class="fa-solid fa-pen-to-square text-tealGreen"></i>
+                <span>İçerik Yönetimi</span>
+            </a>
+        </div>
+    </footer>
+
+    <!-- Makale Tam Metin Okuma Modalı -->
+    <div id="article-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md">
+        <div class="liquid-glass w-full max-w-3xl max-h-[88vh] rounded-[2rem] border border-white/20 shadow-2xl flex flex-col overflow-hidden">
+            <!-- Modal Üst Bar -->
+            <div class="px-6 sm:px-8 py-5 border-b border-white/10 flex items-center justify-between shrink-0">
+                <div class="flex items-center space-x-3">
+                    <span id="modal-category" class="text-xs font-semibold uppercase tracking-wider text-tealGreen"></span>
+                    <span class="text-slate-600">&bull;</span>
+                    <span id="modal-date" class="text-xs text-slate-400"></span>
+                </div>
+                <button onclick="closeArticleModal()" aria-label="Kapat" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Modal İçerik Alanı -->
+            <div class="p-6 sm:p-10 overflow-y-auto space-y-6">
+                <h2 id="modal-title" class="text-2xl sm:text-3xl font-bold text-white leading-snug"></h2>
+                <div id="modal-image-wrap" class="hidden">
+                    <img id="modal-image" src="" alt="" class="w-full max-h-96 object-cover rounded-2xl border border-white/15">
+                </div>
+                <div id="modal-body" class="text-slate-200 text-base font-light leading-relaxed space-y-4"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Yerel dosya açılışlarında (file://) yedek olarak kullanılacak varsayılan içerik
+        const FALLBACK_DATA = {
+            ayarlar: {
+                siteBaslik: "Dr. İsak Daşdemir | Tıp, Bilim, Düşünce ve Edebiyat",
+                footerMetni: "© 2026 Dr. İsak Daşdemir • Tıp, Bilim, Düşünce ve Edebiyat",
+                iletisimAciklama: "Akademik çalışmalar, görüş, soru ve işbirlikleri için formu doldurabilirsiniz.",
+                web3formsKey: ""
+            },
+            slaytlar: [
+                {
+                    etiket: "TIP • BİLİM • DÜŞÜNCE • EDEBİYAT",
+                    ikon: "fa-dna",
+                    renk: "glassBlue",
+                    baslik: "Bilimin Kesinliği ile Edebiyatın ve Düşüncenin",
+                    vurguBaslik: "Derinliği Arasında",
+                    aciklama: "Klinik pratikler, güncel tıbbi literatür ve Nobel'e aday bilimsel keşiflerin yanı sıra; sosyal, kültürel ve siyasal öngörüler üzerine notlar.",
+                    butonMetni: "Yazıları Keşfet",
+                    resim: "",
+                    hedefBolum: "klinik"
+                },
+                {
+                    etiket: "GENETİK • NOBEL KEŞİFLERİ",
+                    ikon: "fa-microscope",
+                    renk: "tealGreen",
+                    baslik: "Genomik Verilerin Hekimlik Pratiğine",
+                    vurguBaslik: "Entegrasyonu",
+                    aciklama: "Hücresel gençleştirme mekanizmaları, yaşa bağlı kronik hastalıkların önlenmesinde açılan yeni ufuklar ve Nobel komitesinin radarındaki yenilikler.",
+                    butonMetni: "Analizi İncele",
+                    resim: "",
+                    hedefBolum: "klinik"
+                },
+                {
+                    etiket: "SOSYAL • ETİK • DİJİTAL TOPLUM",
+                    ikon: "fa-globe",
+                    renk: "oceanBlue",
+                    baslik: "Yapay Zeka Çağında Modern Toplumun",
+                    vurguBaslik: "Yeni Kırılganlıkları",
+                    aciklama: "Hızlanan bilimsel dönüşüm karşısında küresel sağlık politikaları, etik sınırlar ve insanın anlam arayışı üzerine derinlemesine değerlendirmeler.",
+                    butonMetni: "Toplumsal Analizler",
+                    resim: "",
+                    hedefBolum: "sosyal"
+                },
+                {
+                    etiket: "EDEBİYAT • SANAT • İNSAN",
+                    ikon: "fa-feather",
+                    renk: "purple",
+                    baslik: "Hekim Yazarların Kaleminden",
+                    vurguBaslik: "İnsan Ruhunun Anatomisi",
+                    aciklama: "Çehov'dan Bulgakov'a, stetoskop ile kalemi aynı masada buluşturan hekimlerin edebiyat dünyasına bıraktığı benzersiz insani derinlik.",
+                    butonMetni: "Seçkileri Oku",
+                    resim: "",
+                    hedefBolum: "sosyal"
+                }
+            ],
+            yazilar: [
+                {
+                    baslik: "Klinik Pratikler ve Güncel Yaklaşımlar",
+                    bolum: "bilim",
+                    kategori: "Klinik Pratikler",
+                    tarih: "16 Kasım 2026",
+                    resim: "",
+                    ozet: "Klinik pratikler, güncel tıbbi literatür ve bilimsel keşiflerin günlük hekimlik uygulamalarına entegrasyonu ve insan sağlığına etkileri.",
+                    icerik: "Modern hekimlik pratiği, yalnızca tanı ve tedavi algoritmalarının uygulanmasından ibaret değildir; her hastanın biyolojik özgünlüğü ile güncel kanıta dayalı tıp verilerinin kesişiminde kurulan dinamik bir karar sürecidir.\n\n## Kanıttan Pratiğe Geçiş\n\nKlinik araştırmalarda elde edilen istatistiksel anlamlılık, hasta başı uygulamada her zaman aynı karşılığı bulmayabilir. Bu nedenle güncel literatürün eleştirel süzgeçten geçirilmesi ve cerrahi/klinik deneyimin verilerle dengelenmesi temel gerekliliktir.\n\n> İyi hekimlik, eldeki en yeni veriyi hastanın gerçekliğiyle buluşturabilme sanatıdır."
+                },
+                {
+                    baslik: "Nobel Tıp Ödülleri Analizi",
+                    bolum: "bilim",
+                    kategori: "Nobel Tıp Ödülleri Analizi",
+                    tarih: "14 Kasım 2026",
+                    resim: "",
+                    ozet: "Genomik verilerin hekimlik pratiğine entegrasyonu, hücresel düzenleme mekanizmaları ve insan sağlığına etkileri üzerine analizler.",
+                    icerik: "Nobel Fizyoloji veya Tıp Ödülleri, çoğu zaman temel bilim laboratuvarlarında yıllar süren sabırlı gözlemlerin insan sağlığında yarattığı paradigma değişimlerini taçlandırır.\n\n## Genomik ve Hücresel Düzeyde Yeni Ufuklar\n\nGenetik bilginin yalnızca kalıtsal hastalıkların teşhisinde değil, bireyselleştirilmiş tedavi protokollerinin oluşturulmasında kullanılması klinik tıbbın yönünü kökten değiştirmektedir."
+                },
+                {
+                    baslik: "Güncel Literatür Değerlendirmeleri",
+                    bolum: "bilim",
+                    kategori: "Güncel Literatür",
+                    tarih: "14 Kasım 2026",
+                    resim: "",
+                    ozet: "Uluslararası hakemli dergilerde öne çıkan çalışmalar, metodolojik analizler ve klinik karar süreçlerine yansımaları.",
+                    icerik: "Tıp literatüründe her yıl yayımlanan yüz binlerce makale arasından klinik değeri yüksek, metodolojik açıdan sağlam çalışmaları ayırt etmek giderek daha kritik hale gelmektedir.\n\n- Çok merkezli randomize kontrollü çalışmaların gerçek yaşam verileriyle karşılaştırılması\n- Minimal invaziv yöntemlerin uzun dönem onkolojik ve fonksiyonel sonuçları\n- Yapay zeka destekli karar sistemlerinin tanısal doğruluk sınırları"
+                },
+                {
+                    baslik: "Biyoteknoloji Çağında Modern Toplumun Yeni Kırılganlıkları",
+                    bolum: "toplum_edebiyat",
+                    kategori: "Sosyal ve Kültürel Analiz",
+                    tarih: "19 Ekim 2026",
+                    resim: "",
+                    ozet: "Hızlanan bilimsel dönüşüm karşısında küresel sağlık politikaları, etik sınırlar ve insanın anlam arayışı.",
+                    icerik: "Biyoteknoloji ve yapay zeka alanındaki baş döndürücü ilerleme, insan ömrünü uzatırken toplumların etik, kültürel ve psikolojik dayanıklılığını yeni sınavlarla karşı karşıya bırakmaktadır.\n\nTeknolojik kapasitenin artışı her zaman toplumsal refah ve adaletle doğru orantılı ilerlemez. Bilimsel olanakların sınırları genişledikçe, insan onuru ve mahremiyeti merkezde tutan bir etik çerçeveye duyulan ihtiyaç da aynı ölçüde büyümektedir."
+                },
+                {
+                    baslik: "Bilim Diplomasisi ve Küresel Güç Dengelerinin Geleceği",
+                    bolum: "toplum_edebiyat",
+                    kategori: "Siyasal Öngörüler",
+                    tarih: "09 Ekim 2026",
+                    resim: "",
+                    ozet: "Stratejik üstünlüğün laboratuvarlar, biyoteknoloji altyapısı ve bilimsel üretim kapasitesi üzerinden tanımlanması.",
+                    icerik: "21. yüzyılda uluslararası güç dengeleri yalnızca geleneksel ekonomi ve diplomasi araçlarıyla değil, araştırma geliştirme ekosistemleri ve bilimsel üretim kapasitesiyle şekillenmektedir.\n\nSağlık teknolojileri, veri güvenliği ve temel bilim yatırımları artık ülkelerin stratejik bağımsızlığının en belirleyici unsurları arasında yer almaktadır."
+                },
+                {
+                    baslik: "Edebiyatın Evreni ve İnsan Ruhu",
+                    bolum: "toplum_edebiyat",
+                    kategori: "Deneme ve Seçkiler",
+                    tarih: "01 Ekim 2026",
+                    resim: "",
+                    ozet: "Çehov'dan Bulgakov'a hekimlerin edebiyat dünyasına bıraktığı insani derinlik ve gözlem gücü.",
+                    icerik: "Hekimlik ile edebiyat arasındaki kadim bağ, insanın en savunmasız anlarına tanıklık etme ortak paydasından beslenir. Anton Çehov'un satırlarındaki yalın gerçekçilik de Mihail Bulgakov'un keskin gözlemleri de klinik deneyimin insan ruhunu anlama çabasıyla birleşmesinden doğmuştur.\n\n> Tıp benim nikahlı karım, edebiyat ise sevgilimdir. — Anton Çehov"
+                }
+            ]
+        };
+
+        let siteData = FALLBACK_DATA;
+        let currentSlide = 0;
+        let slideInterval = null;
+        let activeCategory = null;
+
+        function escapeHtml(str) {
+            if (!str) return "";
+            return String(str)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function formatMarkdown(mdText) {
+            if (!mdText) return "";
+            const safe = escapeHtml(mdText);
+            const blocks = safe.split(/\n\n+/);
+            return blocks.map(block => {
+                const trimmed = block.trim();
+                if (!trimmed) return "";
+                if (trimmed.startsWith("### ")) {
+                    return `<h4 class="text-lg font-bold text-white pt-2">${applyInlineFormatting(trimmed.slice(4))}</h4>`;
+                }
+                if (trimmed.startsWith("## ")) {
+                    return `<h3 class="text-xl font-bold text-glassBlue pt-3">${applyInlineFormatting(trimmed.slice(3))}</h3>`;
+                }
+                if (trimmed.startsWith("# ")) {
+                    return `<h2 class="text-2xl font-bold text-white pt-3">${applyInlineFormatting(trimmed.slice(2))}</h2>`;
+                }
+                if (trimmed.startsWith("&gt; ")) {
+                    return `<blockquote class="border-l-2 border-tealGreen pl-4 py-1 italic text-slate-300 bg-white/5 rounded-r-xl">${applyInlineFormatting(trimmed.slice(5))}</blockquote>`;
+                }
+                if (trimmed.split("\n").every(line => line.trim().startsWith("- "))) {
+                    const items = trimmed.split("\n").map(line => `<li>${applyInlineFormatting(line.trim().slice(2))}</li>`).join("");
+                    return `<ul class="list-disc list-inside space-y-1.5 text-slate-300">${items}</ul>`;
+                }
+                return `<p>${applyInlineFormatting(trimmed).replace(/\n/g, "<br>")}</p>`;
+            }).join("");
+        }
+
+        function applyInlineFormatting(text) {
+            return text
+                .replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+                .replace(/\*(.+?)\*/g, '<em class="italic text-slate-200">$1</em>');
+        }
+
+        function getSlideColorClasses(renk) {
+            const map = {
+                glassBlue: {
+                    badgeText: "text-glassBlue",
+                    iconText: "text-tealGreen",
+                    gradient: "from-glassBlue via-tealGreen to-cyan-300",
+                    arrow: "text-glassBlue"
+                },
+                tealGreen: {
+                    badgeText: "text-tealGreen",
+                    iconText: "text-glassBlue",
+                    gradient: "from-tealGreen via-glassBlue to-cyan-300",
+                    arrow: "text-tealGreen"
+                },
+                oceanBlue: {
+                    badgeText: "text-oceanBlue",
+                    iconText: "text-glassBlue",
+                    gradient: "from-oceanBlue via-glassBlue to-tealGreen",
+                    arrow: "text-oceanBlue"
+                },
+                purple: {
+                    badgeText: "text-purple-300",
+                    iconText: "text-glassBlue",
+                    gradient: "from-purple-400 via-glassBlue to-tealGreen",
+                    arrow: "text-purple-300"
+                }
+            };
+            return map[renk] || map.glassBlue;
+        }
+
+        function getCategoryColor(kategori) {
+            const map = {
+                "Klinik Pratikler": "text-tealGreen",
+                "Nobel Tıp Ödülleri Analizi": "text-glassBlue",
+                "Güncel Literatür": "text-oceanBlue",
+                "Sosyal ve Kültürel Analiz": "text-purple-400",
+                "Siyasal Öngörüler": "text-cyan-300",
+                "Deneme ve Seçkiler": "text-pink-400"
+            };
+            return map[kategori] || "text-tealGreen";
+        }
+
+        function renderSite() {
+            // Ayarlar
+            if (siteData.ayarlar) {
+                if (siteData.ayarlar.siteBaslik) {
+                    document.title = siteData.ayarlar.siteBaslik;
+                }
+                if (siteData.ayarlar.footerMetni) {
+                    document.getElementById("footer-text").textContent = siteData.ayarlar.footerMetni;
+                }
+                if (siteData.ayarlar.iletisimAciklama) {
+                    document.getElementById("iletisim-desc").textContent = siteData.ayarlar.iletisimAciklama;
+                }
+            }
+
+            // Slaytlar
+            const slidesWrapper = document.getElementById("slides-wrapper");
+            const dotsWrapper = document.getElementById("slider-dots");
+            const slaytlar = siteData.slaytlar || [];
+
+            slidesWrapper.innerHTML = slaytlar.map((s, idx) => {
+                const c = getSlideColorClasses(s.renk);
+                const hiddenClass = idx === 0 ? "" : "hidden";
+                const imageHtml = s.resim
+                    ? `<div class="mt-4 lg:mt-0 lg:w-80 shrink-0"><img src="${escapeHtml(s.resim)}" alt="${escapeHtml(s.baslik)}" class="w-full h-52 object-cover rounded-2xl border border-white/20 shadow-xl"></div>`
+                    : "";
+
+                return `
+                    <div class="slide-item ${hiddenClass} transition-opacity duration-500" data-index="${idx}">
+                        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+                            <div class="space-y-6 flex-1">
+                                <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full liquid-glass border border-white/20 text-xs font-semibold ${c.badgeText}">
+                                    <i class="fa-solid ${escapeHtml(s.ikon || 'fa-dna')} ${c.iconText}"></i>
+                                    <span>${escapeHtml(s.etiket)}</span>
+                                </div>
+                                <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight max-w-4xl">
+                                    ${escapeHtml(s.baslik)} <span class="bg-gradient-to-r ${c.gradient} bg-clip-text text-transparent">${escapeHtml(s.vurguBaslik)}</span>
+                                </h1>
+                                <p class="text-slate-300 text-base sm:text-lg max-w-3xl font-light leading-relaxed">
+                                    ${escapeHtml(s.aciklama)}
+                                </p>
+                                <div class="pt-2">
+                                    <a href="#${escapeHtml(s.hedefBolum || 'klinik')}" class="inline-flex px-7 py-3.5 rounded-2xl liquid-glass text-white font-semibold text-sm shadow-xl hover:scale-105 active:scale-95 transition items-center space-x-3 border border-white/30">
+                                        <span>${escapeHtml(s.butonMetni || 'Yazıları Keşfet')}</span>
+                                        <i class="fa-solid fa-arrow-right ${c.arrow}"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            ${imageHtml}
+                        </div>
+                    </div>
+                `;
+            }).join("");
+
+            dotsWrapper.innerHTML = slaytlar.map((_, idx) => {
+                const activeClasses = idx === 0 ? "w-12 bg-glassBlue" : "w-6 bg-white/30 hover:bg-white/60";
+                return `<button onclick="setSlide(${idx})" aria-label="Slayt ${idx + 1}" class="slide-dot h-1.5 ${activeClasses} rounded-full transition-all duration-300"></button>`;
+            }).join("");
+
+            currentSlide = 0;
+            startSliderAutoplay();
+            renderArticles();
+        }
+
+        function renderArticles() {
+            const yazilar = siteData.yazilar || [];
+            const filtered = activeCategory
+                ? yazilar.filter(y => y.kategori === activeCategory)
+                : yazilar;
+
+            const bilimYazilar = filtered.filter(y => y.bolum === "bilim");
+            const toplumYazilar = filtered.filter(y => y.bolum === "toplum_edebiyat");
+
+            const bilimGrid = document.getElementById("bilim-grid");
+            const toplumGrid = document.getElementById("toplum-grid");
+
+            bilimGrid.innerHTML = bilimYazilar.length > 0
+                ? bilimYazilar.map(y => createCardHtml(y, yazilar.indexOf(y))).join("")
+                : `<p class="text-slate-400 text-sm col-span-3">Bu kategoride henüz yazı bulunmuyor.</p>`;
+
+            toplumGrid.innerHTML = toplumYazilar.length > 0
+                ? toplumYazilar.map(y => createCardHtml(y, yazilar.indexOf(y))).join("")
+                : `<p class="text-slate-400 text-sm col-span-3">Bu kategoride henüz yazı bulunmuyor.</p>`;
+        }
+
+        function createCardHtml(yazi, globalIndex) {
+            const catColor = getCategoryColor(yazi.kategori);
+            const coverImg = yazi.resim
+                ? `<div class="overflow-hidden rounded-2xl border border-white/10"><img src="${escapeHtml(yazi.resim)}" alt="${escapeHtml(yazi.baslik)}" class="w-full h-44 object-cover group-hover:scale-105 transition duration-500"></div>`
+                : "";
+
+            return `
+                <article class="liquid-glass p-7 rounded-3xl space-y-6 flex flex-col justify-between border border-white/15 hover:border-tealGreen/50 transition group">
+                    <div class="space-y-4">
+                        ${coverImg}
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-semibold uppercase tracking-wider ${catColor}">${escapeHtml(yazi.kategori)}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-glassBlue transition">
+                            ${escapeHtml(yazi.baslik)}
+                        </h3>
+                        <p class="text-sm text-slate-300 font-light leading-relaxed">
+                            ${escapeHtml(yazi.ozet)}
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                        <span class="text-xs text-slate-400">${escapeHtml(yazi.tarih || '')}</span>
+                        <button onclick="openArticleModal(${globalIndex})" class="px-5 py-2.5 rounded-xl liquid-glass text-white text-xs font-medium hover:bg-tealGreen/30 transition">
+                            Devamını Oku
+                        </button>
+                    </div>
+                </article>
+            `;
+        }
+
+        function openArticleModal(index) {
+            const yazi = (siteData.yazilar || [])[index];
+            if (!yazi) return;
+
+            const catEl = document.getElementById("modal-category");
+            catEl.textContent = yazi.kategori;
+            catEl.className = `text-xs font-semibold uppercase tracking-wider ${getCategoryColor(yazi.kategori)}`;
+
+            document.getElementById("modal-date").textContent = yazi.tarih || "";
+            document.getElementById("modal-title").textContent = yazi.baslik;
+
+            const imgWrap = document.getElementById("modal-image-wrap");
+            const imgEl = document.getElementById("modal-image");
+            if (yazi.resim) {
+                imgEl.src = yazi.resim;
+                imgEl.alt = yazi.baslik;
+                imgWrap.classList.remove("hidden");
+            } else {
+                imgWrap.classList.add("hidden");
+            }
+
+            document.getElementById("modal-body").innerHTML = formatMarkdown(yazi.icerik || yazi.ozet);
+
+            const modal = document.getElementById("article-modal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeArticleModal() {
+            const modal = document.getElementById("article-modal");
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+            document.body.style.overflow = "";
+        }
+
+        function filterByCategory(categoryName, sectionId) {
+            activeCategory = categoryName;
+            document.getElementById("active-filter-name").textContent = categoryName;
+            document.getElementById("filter-banner").classList.remove("hidden");
+            renderArticles();
+            if (sectionId) {
+                const el = document.getElementById(sectionId);
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+            }
+        }
+
+        function resetCategoryFilter() {
+            activeCategory = null;
+            document.getElementById("filter-banner").classList.add("hidden");
+            renderArticles();
+        }
+
+        function setSlide(index) {
+            const slides = document.querySelectorAll(".slide-item");
+            const dots = document.querySelectorAll(".slide-dot");
+            if (!slides.length || index >= slides.length) return;
+
+            slides[currentSlide].classList.add("hidden");
+            dots[currentSlide].classList.remove("w-12", "bg-glassBlue");
+            dots[currentSlide].classList.add("w-6", "bg-white/30");
+
+            currentSlide = index;
+
+            slides[currentSlide].classList.remove("hidden");
+            dots[currentSlide].classList.remove("w-6", "bg-white/30");
+            dots[currentSlide].classList.add("w-12", "bg-glassBlue");
+        }
+
+        function startSliderAutoplay() {
+            if (slideInterval) clearInterval(slideInterval);
+            const count = (siteData.slaytlar || []).length;
+            if (count <= 1) return;
+            slideInterval = setInterval(() => {
+                setSlide((currentSlide + 1) % count);
+            }, 6000);
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById("mobile-menu").classList.toggle("hidden");
+        }
+
+        function showNotification(title, message, type = "success") {
+            const toast = document.getElementById("toast");
+            const titleEl = document.getElementById("toast-title");
+            const msgEl = document.getElementById("toast-msg");
+            const iconEl = document.getElementById("toast-icon");
+
+            titleEl.textContent = title;
+            msgEl.textContent = message;
+
+            if (type === "success") {
+                iconEl.className = "w-8 h-8 shrink-0 rounded-xl bg-tealGreen/20 text-tealGreen flex items-center justify-center";
+                iconEl.innerHTML = '<i class="fa-solid fa-check"></i>';
+            } else if (type === "warning") {
+                iconEl.className = "w-8 h-8 shrink-0 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center";
+                iconEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+            } else {
+                iconEl.className = "w-8 h-8 shrink-0 rounded-xl bg-glassBlue/20 text-glassBlue flex items-center justify-center";
+                iconEl.innerHTML = '<i class="fa-solid fa-info"></i>';
+            }
+
+            toast.classList.remove("translate-x-[130%]");
+            setTimeout(() => {
+                toast.classList.add("translate-x-[130%]");
+            }, 4000);
+        }
+
+        async function handleContactSubmit(event) {
+            event.preventDefault();
+            const accessKey = siteData.ayarlar && siteData.ayarlar.web3formsKey
+                ? siteData.ayarlar.web3formsKey.trim()
+                : "";
+
+            if (!accessKey) {
+                showNotification(
+                    "E-posta Anahtarı Eksik",
+                    "İletişim formunun e-posta gönderebilmesi için yönetim panelinden Web3Forms anahtarını ekleyin.",
+                    "warning"
+                );
+                return;
+            }
+
+            const form = event.target;
+            const btn = document.getElementById("contact-submit-btn");
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = "Gönderiliyor...";
+
+            try {
+                const formData = new FormData(form);
+                formData.append("access_key", accessKey);
+                formData.append("subject", "Dr. İsak Daşdemir Web Sitesi İletişim Formu");
+
+                const res = await fetch("https://api.web3forms.com/submit", {
+                    method: "POST",
+                    body: formData
+                });
+                const result = await res.json();
+
+                if (result.success) {
+                    showNotification("Gönderildi", "Mesajınız başarıyla iletildi.", "success");
+                    form.reset();
+                } else {
+                    showNotification("Hata", "Mesaj gönderilemedi. Anahtarı kontrol edin.", "warning");
+                }
+            } catch (err) {
+                showNotification("Bağlantı Hatası", "Sunucuya ulaşılamadı. İnternet bağlantınızı kontrol edin.", "warning");
+            } finally {
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }
+        }
+
+        // Modal dışına tıklayınca ve ESC tuşunda kapatma
+        document.getElementById("article-modal").addEventListener("click", function(e) {
+            if (e.target === this) closeArticleModal();
+        });
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "Escape") closeArticleModal();
+        });
+
+        // Başlangıçta önce varsayılan veriyi çiz, ardından canlı JSON dosyasını yükle
+        renderSite();
+        fetch("data/icerik.json?v=" + Date.now())
+            .then(response => {
+                if (!response.ok) throw new Error("JSON yüklenemedi");
+                return response.json();
+            })
+            .then(data => {
+                siteData = data;
+                renderSite();
+            })
+            .catch(() => {
+                // Yerel file:// açılışında varsayılan veriyle çalışmaya devam eder
+            });
+    </script>
+</body>
+</html>

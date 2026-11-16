@@ -1,0 +1,80 @@
+backend:
+  name: github
+  repo: smart4456/drdasdemir
+  branch: main
+
+media_folder: "images"
+public_folder: "images"
+
+collections:
+  - name: "icerik"
+    label: "Site İçerik Yönetimi"
+    files:
+      - name: "ana_veri"
+        label: "Slaytlar, Yazılar ve Site Ayarları"
+        file: "data/icerik.json"
+        fields:
+          - label: "Site Ayarları"
+            name: "ayarlar"
+            widget: "object"
+            fields:
+              - { label: "Site Başlığı", name: "siteBaslik", widget: "string" }
+              - { label: "Altbilgi (Footer) Metni", name: "footerMetni", widget: "string" }
+              - { label: "İletişim Bölümü Açıklaması", name: "iletisimAciklama", widget: "text" }
+              - { label: "Web3Forms E-posta Anahtarı (İsteğe Bağlı)", name: "web3formsKey", widget: "string", required: false }
+
+          - label: "Üst Slaytlar (Hero Slider)"
+            name: "slaytlar"
+            widget: "list"
+            summary: "{{fields.baslik}} {{fields.vurguBaslik}}"
+            fields:
+              - { label: "Üst Etiket", name: "etiket", widget: "string" }
+              - { label: "İkon Kodu (FontAwesome)", name: "ikon", widget: "string", default: "fa-dna" }
+              - label: "Vurgu Rengi"
+                name: "renk"
+                widget: "select"
+                options:
+                  - { label: "Cam Mavisi", value: "glassBlue" }
+                  - { label: "Turkuaz Yeşili", value: "tealGreen" }
+                  - { label: "Okyanus Mavisi", value: "oceanBlue" }
+                  - { label: "Mor", value: "purple" }
+              - { label: "Ana Başlık (Normal Kısım)", name: "baslik", widget: "string" }
+              - { label: "Ana Başlık (Renkli Vurgulu Kısım)", name: "vurguBaslik", widget: "string" }
+              - { label: "Açıklama Metni", name: "aciklama", widget: "text" }
+              - { label: "Buton Yazısı", name: "butonMetni", widget: "string", default: "Yazıları Keşfet" }
+              - { label: "Slayt Görseli (İsteğe Bağlı)", name: "resim", widget: "image", required: false }
+              - label: "Hedef Bölüm"
+                name: "hedefBolum"
+                widget: "select"
+                default: "klinik"
+                options:
+                  - { label: "Tıp ve Bilim Makaleleri", value: "klinik" }
+                  - { label: "Sosyal, Siyasal ve Edebiyat", value: "sosyal" }
+                  - { label: "İletişim", value: "iletisim" }
+
+          - label: "Makaleler ve Yazılar"
+            name: "yazilar"
+            widget: "list"
+            summary: "{{fields.kategori}} | {{fields.baslik}}"
+            fields:
+              - { label: "Yazı Başlığı", name: "baslik", widget: "string" }
+              - label: "Bulunacağı Bölüm"
+                name: "bolum"
+                widget: "select"
+                options:
+                  - { label: "Öne Çıkan Makale ve Analizler (Tıp & Bilim)", value: "bilim" }
+                  - { label: "Sosyal, Siyasal ve Edebiyat Seçkileri", value: "toplum_edebiyat" }
+              - label: "Kategori"
+                name: "kategori"
+                widget: "select"
+                options:
+                  - "Klinik Pratikler"
+                  - "Nobel Tıp Ödülleri Analizi"
+                  - "Güncel Literatür"
+                  - "Sosyal ve Kültürel Analiz"
+                  - "Siyasal Öngörüler"
+                  - "Deneme ve Seçkiler"
+              - { label: "Yayın Tarihi", name: "tarih", widget: "string", default: "16 Kasım 2026" }
+              - { label: "Kapak Resmi (İsteğe Bağlı)", name: "resim", widget: "image", required: false }
+              - { label: "Kart Özeti (Kısa Açıklama)", name: "ozet", widget: "text" }
+              - { label: "Tam Metin (Devamını Oku İçeriği)", name: "icerik", widget: "markdown" }
