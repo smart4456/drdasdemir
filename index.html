@@ -29,6 +29,7 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Şeffaf Liquid Glass Stilleri */
         .liquid-glass {
             background: rgba(5, 11, 24, 0.35);
             backdrop-filter: blur(20px) saturate(180%);
@@ -193,10 +194,13 @@
     <main class="relative z-10 pt-32 pb-24 px-4 sm:px-8 max-w-7xl mx-auto space-y-20">
 
         <!-- Hero Slider Alanı -->
-        <section class="relative p-0 overflow-hidden rounded-[2.5rem] border border-white/20 shadow-2xl">
-            <div id="slider-container" class="relative z-10 min-h-[400px] flex flex-col justify-between">
+        <section class="relative liquid-glass rounded-[2.5rem] p-4 sm:p-6 overflow-hidden border border-white/20 shadow-2xl">
+            <div class="absolute -top-20 -right-20 w-80 h-80 bg-tealGreen/25 rounded-full filter blur-[90px] pointer-events-none"></div>
+            <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-oceanBlue/25 rounded-full filter blur-[90px] pointer-events-none"></div>
+
+            <div id="slider-container" class="relative z-10 flex flex-col justify-between">
                 <div id="slides-wrapper"></div>
-                <div id="slider-dots" class="absolute bottom-6 left-8 z-20 flex items-center space-x-3"></div>
+                <div id="slider-dots" class="flex items-center space-x-3 pt-6 px-4 pb-2"></div>
             </div>
         </section>
 
@@ -436,8 +440,13 @@
                     return `<h2 class="text-2xl font-bold text-white pt-3">${applyInlineFormatting(trimmed.slice(2))}</h2>`;
                 }
                 if (trimmed.startsWith("&gt; ")) {
-                    return `<blockquote class="border-l-2 border-tealGreen pl-4 py-1 italic text-slate-300 bg-white/5 rounded-r-xl">${applyInlineFormatting(trimmed.slice(5))}</blockquote>`; } if (trimmed.split("\n").every(line => line.trim().startsWith("- "))) { const items = trimmed.split("\n").map(line => `<li>${applyInlineFormatting(line.trim().slice(2))}</li>`).join("");
-                    return `<ul class="list-disc list-inside space-y-1.5 text-slate-300">${items}</ul>`; } return `<p>${applyInlineFormatting(trimmed).replace(/\n/g, "<br>")}</p>`;
+                    return `<blockquote class="border-l-2 border-tealGreen pl-4 py-1 italic text-slate-300 bg-white/5 rounded-r-xl">${applyInlineFormatting(trimmed.slice(5))}</blockquote>`;
+                }
+                if (trimmed.split("\n").every(line => line.trim().startsWith("- "))) {
+                    const items = trimmed.split("\n").map(line => `<li>${applyInlineFormatting(line.trim().slice(2))}</li>`).join("");
+                    return `<ul class="list-disc list-inside space-y-1.5 text-slate-300">${items}</ul>`;
+                }
+                return `<p>${applyInlineFormatting(trimmed).replace(/\n/g, "<br>")}</p>`;
             }).join("");
         }
 
@@ -511,15 +520,268 @@
                 const hiddenClass = idx === 0 ? "" : "hidden";
                 
                 const bgImageHtml = s.resim
-                    ? `<div class="absolute inset-0 z-0"><img src="${escapeHtml(s.resim)}" alt="" class="w-full h-full object-cover object-center"><div class="absolute inset-0 bg-gradient-to-r from-[#050b18]/95 via-[#050b18]/60 to-transparent"></div></div>`
-                    : `<div class="absolute inset-0 z-0 bg-gradient-to-tr from-[#030712] via-[#050b18] to-[#042f2e]"></div>`;
+                    ? `<div class="absolute inset-0 z-0"><img src="${escapeHtml(s.resim)}" alt="" class="w-full h-full object-cover"><div class="absolute inset-0 bg-[#050b18]/80 backdrop-blur-[2px]"></div></div>`
+                    : "";
 
                 return `
-                    <div class="slide-item ${hiddenClass} transition-opacity duration-500 w-full relative overflow-hidden rounded-[2.5rem] min-h-[420px] sm:min-h-[480px] flex flex-col justify-between p-8 sm:p-14" data-index="${idx}">
+                    <div class="slide-item ${hiddenClass} transition-opacity duration-500 w-full relative overflow-hidden rounded-[2rem] min-h-[380px] sm:min-h-[420px] flex flex-col justify-between p-6 sm:p-10" data-index="${idx}">
                         ${bgImageHtml}
-                        <div class="relative z-10 space-y-6 max-w-2xl py-2 pb-12">
+                        <div class="relative z-10 space-y-5 max-w-3xl">
                             <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full liquid-glass border border-white/20 text-xs font-semibold ${c.badgeText}">
-                                <i class="fa-solid ${escapeHtml(s.ikon \vert{}\vert{} 'fa-dna')}${c.iconText}"></i>
+                                <i class="fa-solid ${escapeHtml(s.ikon || 'fa-dna')} ${c.iconText}"></i>
                                 <span>${escapeHtml(s.etiket)}</span>
                             </div>
-                            <h1 class="text-3xl sm:text-5xl font-extrabold
+                            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+                                ${escapeHtml(s.baslik)} <span class="bg-gradient-to-r ${c.gradient} bg-clip-text text-transparent">${escapeHtml(s.vurguBaslik)}</span>
+                            </h1>
+                            <p class="text-slate-300 text-base sm:text-lg max-w-2xl font-light leading-relaxed">
+                                ${escapeHtml(s.aciklama)}
+                            </p>
+                            <div class="pt-2">
+                                <a href="#${escapeHtml(s.hedefBolum || 'klinik')}" class="inline-flex px-7 py-3.5 rounded-2xl liquid-glass text-white font-semibold text-sm shadow-xl hover:scale-105 active:scale-95 transition items-center space-x-3 border border-white/30">
+                                    <span>${escapeHtml(s.butonMetni || 'Yazıları Keşfet')}</span>
+                                    <i class="fa-solid fa-arrow-right ${c.arrow}"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+
+            dotsWrapper.innerHTML = slaytlar.map((_, idx) => {
+                const activeClasses = idx === 0 ? "w-12 bg-glassBlue" : "w-6 bg-white/30 hover:bg-white/60";
+                return `<button onclick="setSlide(${idx})" aria-label="Slayt ${idx + 1}" class="slide-dot h-1.5 ${activeClasses} rounded-full transition-all duration-300"></button>`;
+            }).join("");
+
+            currentSlide = 0;
+            startSliderAutoplay();
+            renderArticles();
+        }
+
+        function renderArticles() {
+            const yazilar = siteData.yazilar || [];
+            const filtered = activeCategory
+                ? yazilar.filter(y => y.kategori === activeCategory)
+                : yazilar;
+
+            const bilimYazilar = filtered.filter(y => y.bolum === "bilim");
+            const toplumYazilar = filtered.filter(y => y.bolum === "toplum_edebiyat");
+
+            const bilimGrid = document.getElementById("bilim-grid");
+            const toplumGrid = document.getElementById("toplum-grid");
+
+            bilimGrid.innerHTML = bilimYazilar.length > 0
+                ? bilimYazilar.map(y => createCardHtml(y, yazilar.indexOf(y))).join("")
+                : `<p class="text-slate-400 text-sm col-span-3">Bu kategoride henüz yazı bulunmuyor.</p>`;
+
+            toplumGrid.innerHTML = toplumYazilar.length > 0
+                ? toplumYazilar.map(y => createCardHtml(y, yazilar.indexOf(y))).join("")
+                : `<p class="text-slate-400 text-sm col-span-3">Bu kategoride henüz yazı bulunmuyor.</p>`;
+        }
+
+        function createCardHtml(yazi, globalIndex) {
+            const catColor = getCategoryColor(yazi.kategori);
+            const coverImg = yazi.resim
+                ? `<div class="overflow-hidden rounded-2xl border border-white/10"><img src="${escapeHtml(yazi.resim)}" alt="${escapeHtml(yazi.baslik)}" class="w-full h-44 object-cover group-hover:scale-105 transition duration-500"></div>`
+                : "";
+
+            return `
+                <article class="liquid-glass p-7 rounded-3xl space-y-6 flex flex-col justify-between border border-white/15 hover:border-tealGreen/50 transition group">
+                    <div class="space-y-4">
+                        ${coverImg}
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-semibold uppercase tracking-wider ${catColor}">${escapeHtml(yazi.kategori)}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-glassBlue transition">
+                            ${escapeHtml(yazi.baslik)}
+                        </h3>
+                        <p class="text-sm text-slate-300 font-light leading-relaxed">
+                            ${escapeHtml(yazi.ozet)}
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                        <span class="text-xs text-slate-400">${escapeHtml(yazi.tarih || '')}</span>
+                        <button onclick="openArticleModal(${globalIndex})" class="px-5 py-2.5 rounded-xl liquid-glass text-white text-xs font-medium hover:bg-tealGreen/30 transition">
+                            Devamını Oku
+                        </button>
+                    </div>
+                </article>
+            `;
+        }
+
+        function openArticleModal(index) {
+            const yazi = (siteData.yazilar || [])[index];
+            if (!yazi) return;
+
+            const catEl = document.getElementById("modal-category");
+            catEl.textContent = yazi.kategori;
+            catEl.className = `text-xs font-semibold uppercase tracking-wider ${getCategoryColor(yazi.kategori)}`;
+
+            document.getElementById("modal-date").textContent = yazi.tarih || "";
+            document.getElementById("modal-title").textContent = yazi.baslik;
+
+            const imgWrap = document.getElementById("modal-image-wrap");
+            const imgEl = document.getElementById("modal-image");
+            if (yazi.resim) {
+                imgEl.src = yazi.resim;
+                imgEl.alt = yazi.baslik;
+                imgWrap.classList.remove("hidden");
+            } else {
+                imgWrap.classList.add("hidden");
+            }
+
+            document.getElementById("modal-body").innerHTML = formatMarkdown(yazi.icerik || yazi.ozet);
+
+            const modal = document.getElementById("article-modal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeArticleModal() {
+            const modal = document.getElementById("article-modal");
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+            document.body.style.overflow = "";
+        }
+
+        function filterByCategory(categoryName, sectionId) {
+            activeCategory = categoryName;
+            document.getElementById("active-filter-name").textContent = categoryName;
+            document.getElementById("filter-banner").classList.remove("hidden");
+            renderArticles();
+            if (sectionId) {
+                const el = document.getElementById(sectionId);
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+            }
+        }
+
+        function resetCategoryFilter() {
+            activeCategory = null;
+            document.getElementById("filter-banner").classList.add("hidden");
+            renderArticles();
+        }
+
+        function setSlide(index) {
+            const slides = document.querySelectorAll(".slide-item");
+            const dots = document.querySelectorAll(".slide-dot");
+            if (!slides.length || index >= slides.length) return;
+
+            slides[currentSlide].classList.add("hidden");
+            dots[currentSlide].classList.remove("w-12", "bg-glassBlue");
+            dots[currentSlide].classList.add("w-6", "bg-white/30");
+
+            currentSlide = index;
+
+            slides[currentSlide].classList.remove("hidden");
+            dots[currentSlide].classList.remove("w-6", "bg-white/30");
+            dots[currentSlide].classList.add("w-12", "bg-glassBlue");
+        }
+
+        function startSliderAutoplay() {
+            if (slideInterval) clearInterval(slideInterval);
+            const count = (siteData.slaytlar || []).length;
+            if (count <= 1) return;
+            slideInterval = setInterval(() => {
+                setSlide((currentSlide + 1) % count);
+            }, 6000);
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById("mobile-menu").classList.toggle("hidden");
+        }
+
+        function showNotification(title, message, type = "success") {
+            const toast = document.getElementById("toast");
+            const titleEl = document.getElementById("toast-title");
+            const msgEl = document.getElementById("toast-msg");
+            const iconEl = document.getElementById("toast-icon");
+
+            titleEl.textContent = title;
+            msgEl.textContent = message;
+
+            if (type === "success") {
+                iconEl.className = "w-8 h-8 shrink-0 rounded-xl bg-tealGreen/20 text-tealGreen flex items-center justify-center";
+                iconEl.innerHTML = '<i class="fa-solid fa-check"></i>';
+            } else if (type === "warning") {
+                iconEl.className = "w-8 h-8 shrink-0 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center";
+                iconEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+            } else {
+                iconEl.className = "w-8 h-8 shrink-0 rounded-xl bg-glassBlue/20 text-glassBlue flex items-center justify-center";
+                iconEl.innerHTML = '<i class="fa-solid fa-info"></i>';
+            }
+
+            toast.classList.remove("translate-x-[130%]");
+            setTimeout(() => {
+                toast.classList.add("translate-x-[130%]");
+            }, 4000);
+        }
+
+        async function handleContactSubmit(event) {
+            event.preventDefault();
+            const accessKey = siteData.ayarlar && siteData.ayarlar.web3formsKey
+                ? siteData.ayarlar.web3formsKey.trim()
+                : "";
+
+            if (!accessKey) {
+                showNotification(
+                    "E-posta Anahtarı Eksik",
+                    "İletişim formunun e-posta gönderebilmesi için yönetim panelinden Web3Forms anahtarını ekleyin.",
+                    "warning"
+                );
+                return;
+            }
+
+            const form = event.target;
+            const btn = document.getElementById("contact-submit-btn");
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = "Gönderiliyor...";
+
+            try {
+                const formData = new FormData(form);
+                formData.append("access_key", accessKey);
+                formData.append("subject", "Dr. İsak Daşdemir Web Sitesi İletişim Formu");
+
+                const res = await fetch("https://api.web3forms.com/submit", {
+                    method: "POST",
+                    body: formData
+                });
+                const result = await res.json();
+
+                if (result.success) {
+                    showNotification("Gönderildi", "Mesajınız başarıyla iletildi.", "success");
+                    form.reset();
+                } else {
+                    showNotification("Hata", "Mesaj gönderilemedi. Anahtarı kontrol edin.", "warning");
+                }
+            } catch (err) {
+                showNotification("Bağlantı Hatası", "Sunucuya ulaşılamadı. İnternet bağlantınızı kontrol edin.", "warning");
+            } finally {
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }
+        }
+
+        document.getElementById("article-modal").addEventListener("click", function(e) {
+            if (e.target === this) closeArticleModal();
+        });
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "Escape") closeArticleModal();
+        });
+
+        renderSite();
+        fetch("data/icerik.json?v=" + Date.now())
+            .then(response => {
+                if (!response.ok) throw new Error("JSON yüklenemedi");
+                return response.json();
+            })
+            .then(data => {
+                siteData = data;
+                renderSite();
+            })
+            .catch(() => {});
+    </script>
+</body>
+</html>
+
