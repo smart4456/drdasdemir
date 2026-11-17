@@ -29,7 +29,6 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Şeffaf Liquid Glass Stilleri */
         .liquid-glass {
             background: rgba(5, 11, 24, 0.35);
             backdrop-filter: blur(20px) saturate(180%);
@@ -193,14 +192,11 @@
     <!-- Ana İçerik -->
     <main class="relative z-10 pt-32 pb-24 px-4 sm:px-8 max-w-7xl mx-auto space-y-20">
 
-        <!-- Hero Slider Alanı -->
-        <section class="relative liquid-glass rounded-[2.5rem] p-4 sm:p-6 overflow-hidden border border-white/20 shadow-2xl">
-            <div class="absolute -top-20 -right-20 w-80 h-80 bg-tealGreen/25 rounded-full filter blur-[90px] pointer-events-none"></div>
-            <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-oceanBlue/25 rounded-full filter blur-[90px] pointer-events-none"></div>
-
-            <div id="slider-container" class="relative z-10 flex flex-col justify-between">
-                <div id="slides-wrapper"></div>
-                <div id="slider-dots" class="flex items-center space-x-3 pt-6 px-4 pb-2"></div>
+        <!-- Hero Slider Alanı (Görseli tam dolduran ve yazıları önde tutan yapı) -->
+        <section class="relative liquid-glass rounded-[2.5rem] overflow-hidden border border-white/20 shadow-2xl">
+            <div id="slider-container" class="relative w-full min-h-[420px] flex flex-col justify-between">
+                <div id="slides-wrapper" class="relative w-full"></div>
+                <div id="slider-dots" class="absolute bottom-6 left-6 sm:left-10 z-20 flex items-center space-x-3"></div>
             </div>
         </section>
 
@@ -517,16 +513,19 @@
 
             slidesWrapper.innerHTML = slaytlar.map((s, idx) => {
                 const c = getSlideColorClasses(s.renk);
-                const hiddenClass = idx === 0 ? "" : "hidden";
+                const isActive = idx === 0;
+                const visibilityClass = isActive 
+                    ? "opacity-100 relative z-10 pointer-events-auto" 
+                    : "opacity-0 absolute inset-0 z-0 pointer-events-none";
                 
                 const bgImageHtml = s.resim
-                    ? `<div class="absolute inset-0 z-0"><img src="${escapeHtml(s.resim)}" alt="" class="w-full h-full object-cover"><div class="absolute inset-0 bg-[#050b18]/80 backdrop-blur-[2px]"></div></div>`
+                    ? `<div class="absolute inset-0 w-full h-full z-0"><img src="${escapeHtml(s.resim)}" alt="" class="w-full h-full object-cover"><div class="absolute inset-0 bg-[#050b18]/80 backdrop-blur-[2px]"></div></div>`
                     : "";
 
                 return `
-                    <div class="slide-item ${hiddenClass} transition-opacity duration-500 w-full relative overflow-hidden rounded-[2rem] min-h-[380px] sm:min-h-[420px] flex flex-col justify-between p-6 sm:p-10" data-index="${idx}">
+                    <div class="slide-item ${visibilityClass} transition-opacity duration-700 w-full overflow-hidden min-h-[420px] flex flex-col justify-between p-6 sm:p-10" data-index="${idx}">
                         ${bgImageHtml}
-                        <div class="relative z-10 space-y-5 max-w-3xl">
+                        <div class="relative z-10 space-y-5 max-w-3xl pb-10">
                             <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full liquid-glass border border-white/20 text-xs font-semibold ${c.badgeText}">
                                 <i class="fa-solid ${escapeHtml(s.ikon || 'fa-dna')} ${c.iconText}"></i>
                                 <span>${escapeHtml(s.etiket)}</span>
@@ -667,13 +666,15 @@
             const dots = document.querySelectorAll(".slide-dot");
             if (!slides.length || index >= slides.length) return;
 
-            slides[currentSlide].classList.add("hidden");
+            slides[currentSlide].classList.remove("opacity-100", "relative", "z-10", "pointer-events-auto");
+            slides[currentSlide].classList.add("opacity-0", "absolute", "inset-0", "z-0", "pointer-events-none");
             dots[currentSlide].classList.remove("w-12", "bg-glassBlue");
             dots[currentSlide].classList.add("w-6", "bg-white/30");
 
             currentSlide = index;
 
-            slides[currentSlide].classList.remove("hidden");
+            slides[currentSlide].classList.remove("opacity-0", "absolute", "inset-0", "z-0", "pointer-events-none");
+            slides[currentSlide].classList.add("opacity-100", "relative", "z-10", "pointer-events-auto");
             dots[currentSlide].classList.remove("w-6", "bg-white/30");
             dots[currentSlide].classList.add("w-12", "bg-glassBlue");
         }
@@ -784,4 +785,3 @@
     </script>
 </body>
 </html>
-
