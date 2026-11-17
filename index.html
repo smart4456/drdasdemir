@@ -80,10 +80,6 @@
         ::-webkit-scrollbar-thumb:hover { background: rgba(13, 148, 136, 0.6); }
 
         html { scroll-behavior: smooth; }
-
-        .slide-item {
-            width: 100%;
-        }
     </style>
 </head>
 <body class="bg-deepNight text-slate-100 font-sans min-h-screen relative overflow-x-hidden selection:bg-tealGreen selection:text-white">
@@ -167,7 +163,7 @@
                         <i class="fa-solid fa-chevron-down text-xs text-glassBlue group-hover:rotate-180 transition-transform"></i>
                     </button>
                     <div class="dropdown-menu absolute top-full left-0 mt-2 w-64 liquid-glass rounded-2xl p-2.5 shadow-2xl border border-white/20 flex flex-col space-y-1">
-                        <a href="#sosyal" onclick="filterByCategory('Deneme ve Seçkiler', 'sosyal')" class="px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/10 transition flex flex-col">
+                        <a href="#sosyal" onclick="filterByCategory('Deneme dan Seçkiler', 'sosyal')" class="px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/10 transition flex flex-col">
                             <span class="font-semibold text-white">Deneme ve Seçkiler</span>
                             <span class="text-xs text-slate-400">Edebiyat, sanat ve insana dair notlar</span>
                         </a>
@@ -331,7 +327,6 @@
                     vurguBaslik: "Entegrasyonu",
                     aciklama: "Hücresel gençleştirme mekanizmaları, yaşa bağlı kronik hastalıkların önlenmesinde açılan yeni ufuklar ve Nobel komitesinin radarındaki yenilikler.",
                     butonMetni: "Analizi İncele",
-                    resim: "",
                     hedefBolum: "klinik"
                 },
                 {
@@ -342,7 +337,6 @@
                     vurguBaslik: "Yeni Kırılganlıkları",
                     aciklama: "Hızlanan bilimsel dönüşüm karşısında küresel sağlık politikaları, etik sınırlar ve insanın anlam arayışı üzerine derinlemesine değerlendirmeler.",
                     butonMetni: "Toplumsal Analizler",
-                    resim: "",
                     hedefBolum: "sosyal"
                 },
                 {
@@ -353,7 +347,6 @@
                     vurguBaslik: "İnsan Ruhunun Anatomisi",
                     aciklama: "Çehov'dan Bulgakov'a, stetoskop ile kalemi aynı masada buluşturan hekimlerin edebiyat dünyasına bıraktığı benzersiz insani derinlik.",
                     butonMetni: "Seçkileri Oku",
-                    resim: "",
                     hedefBolum: "sosyal"
                 }
             ],
@@ -525,32 +518,31 @@
             slidesWrapper.innerHTML = slaytlar.map((s, idx) => {
                 const c = getSlideColorClasses(s.renk);
                 const hiddenClass = idx === 0 ? "" : "hidden";
-                const imageHtml = s.resim
-                    ? `<div class="mt-6 lg:mt-0 lg:w-96 shrink-0"><img src="${escapeHtml(s.resim)}" alt="${escapeHtml(s.baslik)}" class="w-full h-64 lg:h-72 object-cover rounded-2xl border border-white/20 shadow-2xl"></div>`
+                
+                const bgImageHtml = s.resim
+                    ? `<div class="absolute inset-0 z-0"><img src="${escapeHtml(s.resim)}" alt="" class="w-full h-full object-cover"><div class="absolute inset-0 bg-[#050b18]/75 backdrop-blur-[2px]"></div></div>`
                     : "";
 
                 return `
-                    <div class="slide-item ${hiddenClass} transition-opacity duration-500 w-full" data-index="${idx}">
-                        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
-                            <div class="space-y-6 flex-1">
-                                <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full liquid-glass border border-white/20 text-xs font-semibold ${c.badgeText}">
-                                    <i class="fa-solid ${escapeHtml(s.ikon || 'fa-dna')} ${c.iconText}"></i>
-                                    <span>${escapeHtml(s.etiket)}</span>
-                                </div>
-                                <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight max-w-4xl">
-                                    ${escapeHtml(s.baslik)} <span class="bg-gradient-to-r ${c.gradient} bg-clip-text text-transparent">${escapeHtml(s.vurguBaslik)}</span>
-                                </h1>
-                                <p class="text-slate-300 text-base sm:text-lg max-w-3xl font-light leading-relaxed">
-                                    ${escapeHtml(s.aciklama)}
-                                </p>
-                                <div class="pt-2">
-                                    <a href="#${escapeHtml(s.hedefBolum || 'klinik')}" class="inline-flex px-7 py-3.5 rounded-2xl liquid-glass text-white font-semibold text-sm shadow-xl hover:scale-105 active:scale-95 transition items-center space-x-3 border border-white/30">
-                                        <span>${escapeHtml(s.butonMetni || 'Yazıları Keşfet')}</span>
-                                        <i class="fa-solid fa-arrow-right ${c.arrow}"></i>
-                                    </a>
-                                </div>
+                    <div class="slide-item ${hiddenClass} transition-opacity duration-500 w-full relative overflow-hidden rounded-[2.5rem] min-h-[380px] sm:min-h-[440px] flex flex-col justify-between p-8 sm:p-14" data-index="${idx}">
+                        ${bgImageHtml}
+                        <div class="relative z-10 space-y-6 max-w-4xl py-2">
+                            <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full liquid-glass border border-white/20 text-xs font-semibold ${c.badgeText}">
+                                <i class="fa-solid ${escapeHtml(s.ikon || 'fa-dna')} ${c.iconText}"></i>
+                                <span>${escapeHtml(s.etiket)}</span>
                             </div>
-                            ${imageHtml}
+                            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+                                ${escapeHtml(s.baslik)} <span class="bg-gradient-to-r ${c.gradient} bg-clip-text text-transparent">${escapeHtml(s.vurguBaslik)}</span>
+                            </h1>
+                            <p class="text-slate-300 text-base sm:text-lg max-w-3xl font-light leading-relaxed">
+                                ${escapeHtml(s.aciklama)}
+                            </p>
+                            <div class="pt-2">
+                                <a href="#${escapeHtml(s.hedefBolum || 'klinik')}" class="inline-flex px-7 py-3.5 rounded-2xl liquid-glass text-white font-semibold text-sm shadow-xl hover:scale-105 active:scale-95 transition items-center space-x-3 border border-white/30">
+                                    <span>${escapeHtml(s.butonMetni || 'Yazıları Keşfet')}</span>
+                                    <i class="fa-solid fa-arrow-right ${c.arrow}"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 `;
