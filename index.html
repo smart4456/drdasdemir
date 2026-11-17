@@ -29,26 +29,26 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Liquid Glass (Cam Efekti) Stilleri */
+        /* Şeffaf Liquid Glass Stilleri */
         .liquid-glass {
-            background: rgba(5, 11, 24, 0.68);
-            backdrop-filter: blur(24px) saturate(200%);
-            -webkit-backdrop-filter: blur(24px) saturate(200%);
-            border: 1px solid rgba(56, 189, 248, 0.25);
+            background: rgba(5, 11, 24, 0.35);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(56, 189, 248, 0.2);
             box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.5),
-                inset 0 1px 2px rgba(255, 255, 255, 0.2),
-                inset 0 -2px 4px rgba(2, 132, 199, 0.2);
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                inset 0 1px 2px rgba(255, 255, 255, 0.15),
+                inset 0 -2px 4px rgba(2, 132, 199, 0.15);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .liquid-glass-hover:hover {
-            background: rgba(13, 148, 136, 0.25);
-            border-color: rgba(13, 148, 136, 0.5);
+            background: rgba(13, 148, 136, 0.2);
+            border-color: rgba(13, 148, 136, 0.4);
             box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.6),
-                inset 0 1px 3px rgba(255, 255, 255, 0.3),
-                0 0 20px rgba(13, 148, 136, 0.3);
+                0 20px 40px rgba(0, 0, 0, 0.5),
+                inset 0 1px 3px rgba(255, 255, 255, 0.25),
+                0 0 20px rgba(13, 148, 136, 0.25);
         }
 
         @keyframes pulseGlow {
@@ -79,38 +79,12 @@
         }
         ::-webkit-scrollbar-thumb:hover { background: rgba(13, 148, 136, 0.6); }
 
-           /* Header: Tamamen renksiz cam şeffaflığı */
-        header nav {
-            background: rgba(255, 255, 255, 0.02) !important;
-            backdrop-filter: blur(20px) !important;
-            -webkit-backdrop-filter: blur(20px) !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        html { scroll-behavior: smooth; }
+
+        .slide-item {
+            width: 100%;
         }
-
-section.relative.liquid-glass {
-    position: relative;
-    overflow: hidden;
-}
-.    .slide-item {
-        position: relative !important;
-        min-height: 450px !important;
-        overflow: hidden !important;
-    }
-
-    .slide-item img {
-        position: absolute !important;
-        inset: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: cover !important;
-        z-index: 0 !important;
-    }
-
-    .slide-item > *:not(img) {
-        position: relative !important;
-        z-index: 10 !important;
-    }
-        </style>
+    </style>
 </head>
 <body class="bg-deepNight text-slate-100 font-sans min-h-screen relative overflow-x-hidden selection:bg-tealGreen selection:text-white">
 
@@ -234,7 +208,7 @@ section.relative.liquid-glass {
             </div>
         </section>
 
-        <!-- Aktif Kategori Filtre Çubuğu (Yalnızca kategori seçildiğinde görünür) -->
+        <!-- Aktif Kategori Filtre Çubuğu -->
         <div id="filter-banner" class="hidden liquid-glass px-6 py-4 rounded-2xl border border-tealGreen/40 flex items-center justify-between">
             <div class="flex items-center space-x-3 text-sm">
                 <i class="fa-solid fa-filter text-tealGreen"></i>
@@ -330,7 +304,6 @@ section.relative.liquid-glass {
     </div>
 
     <script>
-        // Yerel dosya açılışlarında (file://) yedek olarak kullanılacak varsayılan içerik
         const FALLBACK_DATA = {
             ayarlar: {
                 siteBaslik: "Dr. İsak Daşdemir | Tıp, Bilim, Düşünce ve Edebiyat",
@@ -533,7 +506,6 @@ section.relative.liquid-glass {
         }
 
         function renderSite() {
-            // Ayarlar
             if (siteData.ayarlar) {
                 if (siteData.ayarlar.siteBaslik) {
                     document.title = siteData.ayarlar.siteBaslik;
@@ -546,7 +518,6 @@ section.relative.liquid-glass {
                 }
             }
 
-            // Slaytlar
             const slidesWrapper = document.getElementById("slides-wrapper");
             const dotsWrapper = document.getElementById("slider-dots");
             const slaytlar = siteData.slaytlar || [];
@@ -555,13 +526,13 @@ section.relative.liquid-glass {
                 const c = getSlideColorClasses(s.renk);
                 const hiddenClass = idx === 0 ? "" : "hidden";
                 const imageHtml = s.resim
-                    ? `<div class="mt-4 lg:mt-0 lg:w-80 shrink-0"><img src="${escapeHtml(s.resim)}" alt="${escapeHtml(s.baslik)}" class="w-full h-52 object-cover rounded-2xl border border-white/20 shadow-xl"></div>`
+                    ? `<div class="mt-6 lg:mt-0 lg:w-96 shrink-0"><img src="${escapeHtml(s.resim)}" alt="${escapeHtml(s.baslik)}" class="w-full h-64 lg:h-72 object-cover rounded-2xl border border-white/20 shadow-2xl"></div>`
                     : "";
 
                 return `
-                    <div class="slide-item ${hiddenClass} transition-opacity duration-500" data-index="${idx}">
+                    <div class="slide-item ${hiddenClass} transition-opacity duration-500 w-full" data-index="${idx}">
                         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
-                            <div class=relative z-10 space-y-6 flex-1">
+                            <div class="space-y-6 flex-1">
                                 <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full liquid-glass border border-white/20 text-xs font-semibold ${c.badgeText}">
                                     <i class="fa-solid ${escapeHtml(s.ikon || 'fa-dna')} ${c.iconText}"></i>
                                     <span>${escapeHtml(s.etiket)}</span>
@@ -800,7 +771,6 @@ section.relative.liquid-glass {
             }
         }
 
-        // Modal dışına tıklayınca ve ESC tuşunda kapatma
         document.getElementById("article-modal").addEventListener("click", function(e) {
             if (e.target === this) closeArticleModal();
         });
@@ -808,7 +778,6 @@ section.relative.liquid-glass {
             if (e.key === "Escape") closeArticleModal();
         });
 
-        // Başlangıçta önce varsayılan veriyi çiz, ardından canlı JSON dosyasını yükle
         renderSite();
         fetch("data/icerik.json?v=" + Date.now())
             .then(response => {
@@ -819,9 +788,7 @@ section.relative.liquid-glass {
                 siteData = data;
                 renderSite();
             })
-            .catch(() => {
-                // Yerel file:// açılışında varsayılan veriyle çalışmaya devam eder
-            });
+            .catch(() => {});
     </script>
 </body>
 </html>
