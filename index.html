@@ -87,12 +87,24 @@
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
         }
 
-              .slide-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+section.relative.liquid-glass {
+    position: relative;
+    overflow: hidden;
 }
-    </style>
+.slide-item img {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    z-index: 0 !important;
+}
+
+.slide-item > *:not(img) {
+    position: relative;
+    z-index: 10;
+}
+        </style>
 </head>
 <body class="bg-deepNight text-slate-100 font-sans min-h-screen relative overflow-x-hidden selection:bg-tealGreen selection:text-white">
 
