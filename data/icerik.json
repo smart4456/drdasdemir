@@ -9,7 +9,7 @@
     {
       "etiket": "TIP • BİLİM • DÜŞÜNCE • EDEBİYAT",
       "ikon": "fa-dna",
-      "renk": "purple",
+      "renk": "tealGreen",
       "baslik": "Bilimin Kesinliği ile Edebiyatın ve Düşüncenin",
       "vurguBaslik": "Derinliği Arasında",
       "aciklama": "Klinik pratikler, güncel tıbbi literatür ve Nobel'e aday bilimsel keşiflerin yanı sıra; sosyal, kültürel ve siyasal öngörüler üzerine notlar.",
@@ -42,7 +42,7 @@
     {
       "etiket": "EDEBİYAT • SANAT • İNSAN",
       "ikon": "fa-feather",
-      "renk": "purple",
+      "renk": "tealGreen",
       "baslik": "Hekim Yazarların Kaleminden",
       "vurguBaslik": "İnsan Ruhunun Anatomisi",
       "aciklama": "Çehov'dan Bulgakov'a, stetoskop ile kalemi aynı masada buluşturan hekimlerin edebiyat dünyasına bıraktığı benzersiz insani derinlik.",
@@ -66,7 +66,7 @@
       "bolum": "bilim",
       "kategori": "Nobel Tıp Ödülleri Analizi",
       "tarih": "14 Kasım 2026",
-      "resim": "",
+      "resim": "/images/44991.jpg",
       "ozet": "Genomik verilerin hekimlik pratiğine entegrasyonu, hücresel düzenleme mekanizmaları ve insan sağlığına etkileri üzerine analizler.",
       "icerik": "Nobel Fizyoloji veya Tıp Ödülleri, çoğu zaman temel bilim laboratuvarlarında yıllar süren sabırlı gözlemlerin insan sağlığında yarattığı paradigma değişimlerini taçlandırır.\n\n## Genomik ve Hücresel Düzeyde Yeni Ufuklar\n\nGenetik bilginin yalnızca kalıtsal hastalıkların teşhisinde değil, bireyselleştirilmiş tedavi protokollerinin oluşturulmasında kullanılması klinik tıbbın yönünü kökten değiştirmektedir."
     },
@@ -75,7 +75,7 @@
       "bolum": "bilim",
       "kategori": "Güncel Literatür",
       "tarih": "14 Kasım 2026",
-      "resim": "",
+      "resim": "/images/44992.jpg",
       "ozet": "Uluslararası hakemli dergilerde öne çıkan çalışmalar, metodolojik analizler ve klinik karar süreçlerine yansımaları.",
       "icerik": "Tıp literatüründe her yıl yayımlanan yüz binlerce makale arasından klinik değeri yüksek, metodolojik açıdan sağlam çalışmaları ayırt etmek giderek daha kritik hale gelmektedir.\n\n- Çok merkezli randomize kontrollü çalışmaların gerçek yaşam verileriyle karşılaştırılması\n- Minimal invaziv yöntemlerin uzun dönem onkolojik ve fonksiyonel sonuçları\n- Yapay zeka destekli karar sistemlerinin tanısal doğruluk sınırları"
     },
