@@ -29,54 +29,22 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Liquid Glass (Cam Efekti) Stilleri */
         .liquid-glass {
             background: rgba(5, 11, 24, 0.68);
             backdrop-filter: blur(24px) saturate(200%);
             -webkit-backdrop-filter: blur(24px) saturate(200%);
             border: 1px solid rgba(56, 189, 248, 0.25);
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.5),
-                inset 0 1px 2px rgba(255, 255, 255, 0.2),
-                inset 0 -2px 4px rgba(2, 132, 199, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.2);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        /* Renksiz / Nötr Şeffaf Liquid Glass (Header için) */
         .liquid-glass-neutral {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 
-                0 15px 35px rgba(0, 0, 0, 0.3),
-                inset 0 1px 1px rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        .liquid-glass-hover:hover {
-            background: rgba(13, 148, 136, 0.25);
-            border-color: rgba(13, 148, 136, 0.5);
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.6),
-                inset 0 1px 3px rgba(255, 255, 255, 0.3),
-                0 0 20px rgba(13, 148, 136, 0.3);
-        }
-
-        /* Arka plan akışkan aydınlatma öbekleri */
-        @keyframes pulseGlow {
-            0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.45; }
-            50% { transform: scale(1.15) translate(20px, -30px); opacity: 0.75; }
-        }
-
-        .bg-glow-1 {
-            animation: pulseGlow 15s ease-in-out infinite;
-        }
-        .bg-glow-2 {
-            animation: pulseGlow 20s ease-in-out infinite reverse;
-        }
-
-        /* Dropdown animasyon */
         .dropdown-menu {
             opacity: 0;
             visibility: hidden;
@@ -88,34 +56,11 @@
             visibility: visible;
             transform: translateY(0);
         }
-
-        /* Özel Kaydırma Çubuğu */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #050b18;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(56, 189, 248, 0.3);
-            border-radius: 9999px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(13, 148, 136, 0.6);
-        }
     </style>
 </head>
 <body class="bg-deepNight text-slate-100 font-sans min-h-screen relative overflow-x-hidden selection:bg-tealGreen selection:text-white">
 
-    <!-- Arka Plan Katmanları -->
-    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div class="absolute inset-0 bg-gradient-to-tr from-[#030712] via-[#050b18] to-[#042f2e]"></div>
-        <div class="absolute -top-40 -left-40 w-[40rem] h-[40rem] bg-oceanBlue/25 rounded-full filter blur-[150px] bg-glow-1"></div>
-        <div class="absolute top-1/3 -right-20 w-[45rem] h-[45rem] bg-tealGreen/20 rounded-full filter blur-[170px] bg-glow-2"></div>
-        <div class="absolute -bottom-32 left-1/3 w-[40rem] h-[40rem] bg-glassBlue/20 rounded-full filter blur-[160px] bg-glow-1"></div>
-    </div>
-
-    <!-- Bildirim Kutusu (Toast) -->
+    <!-- Bildirim Kutusu -->
     <div id="toast" class="fixed top-6 right-6 z-50 transform translate-x-full transition-transform duration-300 ease-out">
         <div class="liquid-glass px-5 py-3.5 rounded-2xl flex items-center space-x-3 text-sm shadow-2xl border border-tealGreen/40">
             <div id="toast-icon" class="w-8 h-8 rounded-xl bg-tealGreen/20 text-tealGreen flex items-center justify-center">
@@ -128,67 +73,63 @@
         </div>
     </div>
 
-    <!-- Üst Navigasyon Menüsü -->
+    <!-- Üst Navigasyon (Renksiz Liquid Glass) -->
     <header class="fixed top-4 left-0 right-0 z-40 px-4 sm:px-8">
         <nav class="max-w-7xl mx-auto liquid-glass-neutral rounded-3xl px-6 py-4 flex items-center justify-between shadow-2xl">
             <a href="#" class="flex items-center space-x-3 group">
-                <span class="font-bold text-xl tracking-tight text-white drop-shadow-sm flex items-center gap-1.5">
+                <span class="font-bold text-xl tracking-tight text-white flex items-center gap-1.5">
                     Dr. <span class="text-sky-200">İsak Daşdemir</span>
                 </span>
             </a>
 
-            <!-- Ana Menü -->
             <div class="hidden md:flex items-center space-x-2">
-                <!-- Tıp ve Bilim -->
                 <div class="relative group">
                     <button class="px-4 py-2 rounded-2xl text-sm font-medium text-slate-100 hover:text-white bg-slate-900/30 hover:bg-slate-900/50 flex items-center space-x-2 transition border border-white/10">
                         <span>Tıp ve Bilim</span>
                         <i class="fa-solid fa-chevron-down text-xs text-sky-300 group-hover:rotate-180 transition-transform"></i>
                     </button>
                     <div class="dropdown-menu absolute top-full left-0 mt-2 w-80 liquid-glass rounded-2xl p-2.5 shadow-2xl border border-white/25 flex flex-col space-y-1">
-                        <a href="#klinik" onclick="showNotification('Navigasyon', 'Klinik Pratikler seçildi.', 'info')" class="px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/10 transition flex flex-col">
+                        <a href="#klinik" class="px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/10 transition flex flex-col">
                             <span class="font-semibold text-white">Klinik Pratikler</span>
-                            <span class="text-xs text-slate-400">Klinik Pratikler, Güncel pratikle entegrasyonu ve insan sağlığına etkileri.</span>
+                            <span class="text-xs text-slate-400">Klinik pratikler ve güncel entegrasyonlar.</span>
                         </a>
-                        <a href="#literatur" onclick="showNotification('Navigasyon', 'Güncel Literatür seçildi.', 'info')" class="px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/10 transition flex flex-col">
+                        <a href="#literatur" class="px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/10 transition flex flex-col">
                             <span class="font-semibold text-white">Güncel Literatür</span>
-                            <span class="text-xs text-slate-400">Genomik verilerin hekimlik pratiği ve insan sağlığına etkileri.</span>
+                            <span class="text-xs text-slate-400">Genomik veriler ve hekimlik pratiği.</span>
                         </a>
-                        <a href="#nobel" onclick="showNotification('Navigasyon', 'Nobel Analizi seçildi.', 'info')" class="px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/10 transition flex flex-col">
+                        <a href="#nobel" class="px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/10 transition flex flex-col">
                             <span class="font-semibold text-white">Nobel Tıp Ödülleri Analizi</span>
-                            <span class="text-xs text-slate-400">Nobel Tıp Ödülleri Analizi, Nobel...</span>
+                            <span class="text-xs text-slate-400">Nobel komitesi ve bilimsel keşifler.</span>
                         </a>
                     </div>
                 </div>
 
-                <!-- Düşünce ve Toplum -->
                 <div class="relative group">
                     <button class="px-4 py-2 rounded-2xl text-sm font-medium text-slate-100 hover:text-white bg-slate-900/30 hover:bg-slate-900/50 flex items-center space-x-2 transition border border-white/10">
                         <span>Düşünce ve Toplum</span>
                         <i class="fa-solid fa-chevron-down text-xs text-sky-300 group-hover:rotate-180 transition-transform"></i>
                     </button>
                     <div class="dropdown-menu absolute top-full left-0 mt-2 w-72 liquid-glass rounded-2xl p-2.5 shadow-2xl border border-white/25 flex flex-col space-y-1">
-                        <a href="#sosyal" onclick="showNotification('Navigasyon', 'Sosyal ve Kültürel Analiz seçildi.', 'info')" class="px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/10 transition flex flex-col">
+                        <a href="#sosyal" class="px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/10 transition flex flex-col">
                             <span class="font-semibold text-white">Sosyal ve Kültürel Analiz</span>
-                            <span class="text-xs text-slate-400">Modern toplum, etik ve insan halleri</span>
+                            <span class="text-xs text-slate-400">Modern toplum, etik ve insan halleri.</span>
                         </a>
-                        <a href="#siyasal" onclick="showNotification('Navigasyon', 'Siyasal Öngörüler seçildi.', 'info')" class="px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/10 transition flex flex-col">
+                        <a href="#siyasal" class="px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/10 transition flex flex-col">
                             <span class="font-semibold text-white">Siyasal Öngörüler</span>
-                            <span class="text-xs text-slate-400">Küresel dönüşüm ve gelecek perspektifi</span>
+                            <span class="text-xs text-slate-400">Küresel dönüşüm ve gelecek perspektifi.</span>
                         </a>
                     </div>
                 </div>
 
-                <!-- Edebiyat -->
                 <div class="relative group">
                     <button class="px-4 py-2 rounded-2xl text-sm font-medium text-slate-100 hover:text-white bg-slate-900/30 hover:bg-slate-900/50 flex items-center space-x-2 transition border border-white/10">
                         <span>Edebiyat</span>
                         <i class="fa-solid fa-chevron-down text-xs text-sky-300 group-hover:rotate-180 transition-transform"></i>
                     </button>
                     <div class="dropdown-menu absolute top-full left-0 mt-2 w-64 liquid-glass rounded-2xl p-2.5 shadow-2xl border border-white/25 flex flex-col space-y-1">
-                        <a href="#edebiyat" onclick="showNotification('Navigasyon', 'Deneme ve Seçkiler seçildi.', 'info')" class="px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/10 transition flex flex-col">
+                        <a href="#edebiyat" class="px-4 py-3 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/10 transition flex flex-col">
                             <span class="font-semibold text-white">Deneme ve Seçkiler</span>
-                            <span class="text-xs text-slate-400">Edebiyat, sanat ve insana dair notlar</span>
+                            <span class="text-xs text-slate-400">Edebiyat, sanat ve insana dair notlar.</span>
                         </a>
                     </div>
                 </div>
@@ -196,7 +137,6 @@
                 <a href="#iletisim" class="px-4 py-2 rounded-2xl text-sm font-medium text-slate-100 hover:text-white bg-slate-900/30 hover:bg-slate-900/50 transition border border-white/10">İletişim</a>
             </div>
 
-            <!-- Sağ Mobil Menü Butonu -->
             <div class="flex items-center space-x-3">
                 <button onclick="toggleMobileMenu()" class="md:hidden w-10 h-10 rounded-2xl liquid-glass-neutral flex items-center justify-center text-slate-100 border border-white/15">
                     <i class="fa-solid fa-bars"></i>
@@ -216,14 +156,14 @@
     <!-- Ana İçerik -->
     <main class="relative z-10 pt-32 pb-24 px-4 sm:px-8 max-w-7xl mx-auto space-y-20">
 
-        <!-- Hero Slider Alanı (Görselleri tam kaplayan yapı) -->
+        <!-- Hero Slider (Görselleri tam kaplayan ve yazıları ön plana alan yapı) -->
         <section class="relative rounded-[2.5rem] overflow-hidden border border-white/20 shadow-2xl">
-            <div id="slider-container" class="z-10 min-h-[380px] sm:min-h-[340px] flex flex-col justify-between">
+            <div id="slider-container" class="relative z-10 min-h-[420px] sm:min-h-[400px] flex flex-col justify-between">
                 <div id="slides-wrapper">
                     <!-- Slayt 1 -->
                     <div class="slide-item relative overflow-hidden p-8 sm:p-14 space-y-6 transition-opacity duration-500" data-index="0">
-                        <img src="resimler/slide1.jpg" alt="" class="absolute inset-0 w-full h-full object-cover z-0">
-                        <div class="absolute inset-0 bg-gradient-to-r from-[#030712]/90 via-[#030712]/60 to-transparent z-0"></div>
+                        <img src="44889.jpg" alt="Slayt Görseli" class="absolute inset-0 w-full h-full object-cover z-0">
+                        <div class="absolute inset-0 bg-gradient-to-r from-[#030712]/95 via-[#030712]/70 to-transparent z-0"></div>
                         <div class="relative z-10 space-y-6">
                             <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full liquid-glass border border-white/20 text-xs font-semibold text-glassBlue">
                                 <i class="fa-solid fa-dna text-tealGreen"></i>
@@ -236,18 +176,18 @@
                                 Klinik pratikler, güncel tıbbi literatür ve Nobel'e aday bilimsel keşiflerin yanı sıra; sosyal, kültürel ve siyasal öngörüler üzerine notlar.
                             </p>
                             <div class="pt-2">
-                                <button onclick="showNotification('Keşif', 'Yazılar yükleniyor...', 'success')" class="px-7 py-3.5 rounded-2xl liquid-glass text-white font-semibold text-sm shadow-xl hover:scale-105 active:scale-95 transition flex items-center space-x-3 border border-white/30">
+                                <a href="#klinik" class="inline-flex items-center space-x-3 px-7 py-3.5 rounded-2xl liquid-glass text-white font-semibold text-sm shadow-xl hover:scale-105 active:scale-95 transition border border-white/30">
                                     <span>Yazıları Keşfet</span>
                                     <i class="fa-solid fa-arrow-right text-glassBlue"></i>
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
 
                     <!-- Slayt 2 -->
                     <div class="slide-item hidden relative overflow-hidden p-8 sm:p-14 space-y-6 transition-opacity duration-500" data-index="1">
-                        <img src="resimler/slide2.jpg" alt="" class="absolute inset-0 w-full h-full object-cover z-0">
-                        <div class="absolute inset-0 bg-gradient-to-r from-[#030712]/90 via-[#030712]/60 to-transparent z-0"></div>
+                        <img src="44851.jpg" alt="Slayt Görseli" class="absolute inset-0 w-full h-full object-cover z-0">
+                        <div class="absolute inset-0 bg-gradient-to-r from-[#030712]/95 via-[#030712]/70 to-transparent z-0"></div>
                         <div class="relative z-10 space-y-6">
                             <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full liquid-glass border border-white/20 text-xs font-semibold text-tealGreen">
                                 <i class="fa-solid fa-microscope text-glassBlue"></i>
@@ -260,18 +200,18 @@
                                 Hücresel gençleştirme mekanizmaları, yaşa bağlı kronik hastalıkların önlenmesinde açılan yeni ufuklar ve Nobel komitesinin radarındaki yenilikler.
                             </p>
                             <div class="pt-2">
-                                <button onclick="showNotification('Makale', 'Genetik makalesi açılıyor...', 'success')" class="px-7 py-3.5 rounded-2xl liquid-glass text-white font-semibold text-sm shadow-xl hover:scale-105 active:scale-95 transition flex items-center space-x-3 border border-white/30">
+                                <a href="#nobel" class="inline-flex items-center space-x-3 px-7 py-3.5 rounded-2xl liquid-glass text-white font-semibold text-sm shadow-xl hover:scale-105 active:scale-95 transition border border-white/30">
                                     <span>Analizi İncele</span>
                                     <i class="fa-solid fa-arrow-right text-tealGreen"></i>
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
 
                     <!-- Slayt 3 -->
                     <div class="slide-item hidden relative overflow-hidden p-8 sm:p-14 space-y-6 transition-opacity duration-500" data-index="2">
-                        <img src="resimler/slide3.jpg" alt="" class="absolute inset-0 w-full h-full object-cover z-0">
-                        <div class="absolute inset-0 bg-gradient-to-r from-[#030712]/90 via-[#030712]/60 to-transparent z-0"></div>
+                        <img src="44852.jpg" alt="Slayt Görseli" class="absolute inset-0 w-full h-full object-cover z-0">
+                        <div class="absolute inset-0 bg-gradient-to-r from-[#030712]/95 via-[#030712]/70 to-transparent z-0"></div>
                         <div class="relative z-10 space-y-6">
                             <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full liquid-glass border border-white/20 text-xs font-semibold text-oceanBlue">
                                 <i class="fa-solid fa-globe text-glassBlue"></i>
@@ -284,18 +224,18 @@
                                 Hızlanan bilimsel dönüşüm karşısında küresel sağlık politikaları, etik sınırlar ve insanın anlam arayışı üzerine derinlemesine değerlendirmeler.
                             </p>
                             <div class="pt-2">
-                                <button onclick="showNotification('Toplum', 'Sosyal analizler yüklendi.', 'success')" class="px-7 py-3.5 rounded-2xl liquid-glass text-white font-semibold text-sm shadow-xl hover:scale-105 active:scale-95 transition flex items-center space-x-3 border border-white/30">
+                                <a href="#sosyal" class="inline-flex items-center space-x-3 px-7 py-3.5 rounded-2xl liquid-glass text-white font-semibold text-sm shadow-xl hover:scale-105 active:scale-95 transition border border-white/30">
                                     <span>Toplumsal Analizler</span>
                                     <i class="fa-solid fa-arrow-right text-oceanBlue"></i>
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
 
                     <!-- Slayt 4 -->
                     <div class="slide-item hidden relative overflow-hidden p-8 sm:p-14 space-y-6 transition-opacity duration-500" data-index="3">
-                        <img src="resimler/slide4.jpg" alt="" class="absolute inset-0 w-full h-full object-cover z-0">
-                        <div class="absolute inset-0 bg-gradient-to-r from-[#030712]/90 via-[#030712]/60 to-transparent z-0"></div>
+                        <img src="44853.jpg" alt="Slayt Görseli" class="absolute inset-0 w-full h-full object-cover z-0">
+                        <div class="absolute inset-0 bg-gradient-to-r from-[#030712]/95 via-[#030712]/70 to-transparent z-0"></div>
                         <div class="relative z-10 space-y-6">
                             <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full liquid-glass border border-white/20 text-xs font-semibold text-purple-300">
                                 <i class="fa-solid fa-feather text-glassBlue"></i>
@@ -308,17 +248,17 @@
                                 Çehov'dan Bulgakov'a, stetoskop ile kalemi aynı masada buluşturan hekimlerin edebiyat dünyasına bıraktığı benzersiz insani derinlik.
                             </p>
                             <div class="pt-2">
-                                <button onclick="showNotification('Edebiyat', 'Edebiyat seçkisi açıldı.', 'success')" class="px-7 py-3.5 rounded-2xl liquid-glass text-white font-semibold text-sm shadow-xl hover:scale-105 active:scale-95 transition flex items-center space-x-3 border border-white/30">
+                                <a href="#edebiyat" class="inline-flex items-center space-x-3 px-7 py-3.5 rounded-2xl liquid-glass text-white font-semibold text-sm shadow-xl hover:scale-105 active:scale-95 transition border border-white/30">
                                     <span>Seçkileri Oku</span>
                                     <i class="fa-solid fa-arrow-right text-purple-300"></i>
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 4 Adet Slayt Geçiş Göstergesi (Dot) -->
-                <div id="slider-dots" class="relative z-10 px-8 pb-6 flex items-center space-x-3 pt-6">
+                <!-- Göstergeler (Dots) -->
+                <div class="relative z-10 px-8 pb-6 flex items-center space-x-3 pt-6">
                     <button onclick="setSlide(0)" class="slide-dot h-1.5 w-12 rounded-full bg-glassBlue transition-all duration-300"></button>
                     <button onclick="setSlide(1)" class="slide-dot h-1.5 w-6 rounded-full bg-white/30 hover:bg-white/60 transition-all duration-300"></button>
                     <button onclick="setSlide(2)" class="slide-dot h-1.5 w-6 rounded-full bg-white/30 hover:bg-white/60 transition-all duration-300"></button>
@@ -327,7 +267,7 @@
             </div>
         </section>
 
-        <!-- Alt Kısımda İçerik Kartları -->
+        <!-- İçerik Kartları -->
         <section id="klinik" class="space-y-10">
             <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
                 <div>
@@ -374,54 +314,6 @@
             </div>
         </section>
 
-        <!-- Sosyal & Edebiyat Ek Bölümü -->
-        <section id="sosyal" class="space-y-10">
-            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-                <div>
-                    <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white">Sosyal, Siyasal ve Edebiyat Seçkileri</h2>
-                    <p class="text-slate-400 text-sm mt-1">Toplum, kültür ve edebi denemeler.</p>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="liquid-glass p-7 rounded-3xl space-y-6 flex flex-col justify-between border border-white/15 hover:border-tealGreen/50 transition group">
-                    <div class="space-y-4">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-purple-400">Sosyal ve Kültürel</span>
-                        <h3 class="text-xl font-bold text-white group-hover:text-purple-300 transition">Biyoteknoloji Çağında Modern Toplumun Yeni Kırılganlıkları</h3>
-                        <p class="text-sm text-slate-300 font-light leading-relaxed">Hızlanan bilimsel dönüşüm karşısında küresel sağlık politikaları.</p>
-                    </div>
-                    <div class="pt-4 border-t border-white/10 flex items-center justify-between">
-                        <span class="text-xs text-slate-400">19 Ekim 2026</span>
-                        <button onclick="showNotification('Analiz', 'Sosyal analiz açılıyor...', 'success')" class="px-4 py-2 rounded-xl liquid-glass text-white text-xs font-medium">Devamını Oku</button>
-                    </div>
-                </div>
-
-                <div id="siyasal" class="liquid-glass p-7 rounded-3xl space-y-6 flex flex-col justify-between border border-white/15 hover:border-tealGreen/50 transition group">
-                    <div class="space-y-4">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-cyan-300">Siyasal Öngörüler</span>
-                        <h3 class="text-xl font-bold text-white group-hover:text-cyan-200 transition">Bilim Diplomasisi ve Küresel Güç Dengelerinin Geleceği</h3>
-                        <p class="text-sm text-slate-300 font-light leading-relaxed">Stratejik üstünlüğün laboratuvarlar üzerinden tanımlanması.</p>
-                    </div>
-                    <div class="pt-4 border-t border-white/10 flex items-center justify-between">
-                        <span class="text-xs text-slate-400">09 Ekim 2026</span>
-                        <button onclick="showNotification('Analiz', 'Siyasal öngörüler açılıyor...', 'success')" class="px-4 py-2 rounded-xl liquid-glass text-white text-xs font-medium">Devamını Oku</button>
-                    </div>
-                </div>
-
-                <div id="edebiyat" class="liquid-glass p-7 rounded-3xl space-y-6 flex flex-col justify-between border border-white/15 hover:border-tealGreen/50 transition group">
-                    <div class="space-y-4">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-pink-400">Edebiyat</span>
-                        <h3 class="text-xl font-bold text-white group-hover:text-pink-300 transition">Edebiyatın Evreni ve İnsan Ruhu</h3>
-                        <p class="text-sm text-slate-300 font-light leading-relaxed">Çehov'dan Bulgakov'a hekimlerin edebiyat dünyası.</p>
-                    </div>
-                    <div class="pt-4 border-t border-white/10 flex items-center justify-between">
-                        <span class="text-xs text-slate-400">01 Ekim 2026</span>
-                        <button onclick="showNotification('Edebiyat', 'Edebiyat seçkisi açılıyor...', 'success')" class="px-4 py-2 rounded-xl liquid-glass text-white text-xs font-medium">Devamını Oku</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- İletişim Bölümü -->
         <section id="iletisim" class="liquid-glass p-8 sm:p-12 rounded-[2.5rem] border border-white/20 shadow-2xl">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
@@ -441,82 +333,18 @@
 
     </main>
 
-    <!-- Altbilgi -->
+    <!-- Footer -->
     <footer class="relative z-10 border-t border-white/10 py-10 px-4 sm:px-8 liquid-glass">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 relative">
-            <p class="text-sm text-slate-400">&copy; 2026 Dr. İsak Daşdemir &bull; Tıp, Bilim. &bull; <button onclick="toggleAdminPreview()" class="text-slate-300 hover:text-white underline underline-offset-4 cursor-pointer">Yönetim</button></p>
-            
-            <div id="admin-preview-panel" class="liquid-glass p-5 rounded-3xl border border-tealGreen/40 shadow-2xl flex items-center space-x-6">
-                <div class="flex items-center space-x-3 text-xs text-slate-200">
-                    <i class="fa-solid fa-chart-column text-tealGreen text-base"></i>
-                    <span>Site İstatistikleri: <strong class="text-white">120 Yazı</strong>, <strong class="text-white">500 Yorum</strong></span>
-                </div>
-                <button onclick="toggleAdminModal()" class="px-5 py-2 rounded-2xl bg-tealGreen hover:bg-tealGreen/80 text-white text-xs font-semibold transition shadow-lg">Giriş</button>
-            </div>
+            <p class="text-sm text-slate-400">&copy; 2026 Dr. İsak Daşdemir &bull; Tıp, Bilim.</p>
         </div>
     </footer>
 
-    <!-- Yönetim Giriş Modalı -->
-    <div id="admin-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md hidden">
-        <div class="liquid-glass p-8 rounded-[2.5rem] w-full max-w-md space-y-6 border border-tealGreen/40 shadow-2xl relative">
-            <button onclick="toggleAdminModal()" class="absolute top-6 right-6 w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-slate-300 flex items-center justify-center transition">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            
-            <div class="flex items-center space-x-3">
-                <div class="w-12 h-12 rounded-2xl bg-tealGreen/20 text-tealGreen flex items-center justify-center text-xl">
-                    <i class="fa-solid fa-user-shield"></i>
-                </div>
-                <div>
-                    <h3 class="text-xl font-bold text-white">Yönetim Arayüzü</h3>
-                    <p class="text-xs text-slate-300">Dr. İsak Daşdemir İçerik Yönetimi</p>
-                </div>
-            </div>
-
-            <div class="space-y-4 pt-2">
-                <div class="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2">
-                    <div class="flex justify-between text-xs text-slate-300">
-                        <span>Aktif Yazı Sayısı:</span>
-                        <span class="text-tealGreen font-bold">120</span>
-                    </div>
-                    <div class="flex justify-between text-xs text-slate-300">
-                        <span>Toplam Yorumlar:</span>
-                        <span class="text-glassBlue font-bold">500</span>
-                    </div>
-                    <div class="flex justify-between text-xs text-slate-300">
-                        <span>Sistem Durumu:</span>
-                        <span class="text-emerald-400 font-bold">Güvenli / Çevrimiçi</span>
-                    </div>
-                </div>
-
-                <div class="space-y-3">
-                    <input type="password" placeholder="Yönetici Şifresi" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/20 text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-tealGreen">
-                    <button onclick="adminLoginSuccess()" class="w-full py-3 rounded-xl bg-tealGreen hover:bg-tealGreen/80 text-white font-semibold text-sm shadow-lg transition">Giriş Yap ve Yönet</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- JavaScript Etkileşimler -->
+    <!-- JavaScript Kontrolleri -->
     <script>
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
-        }
-
-        function toggleAdminPreview() {
-            const panel = document.getElementById('admin-preview-panel');
-            panel.classList.toggle('hidden');
-        }
-
-        function toggleAdminModal() {
-            const modal = document.getElementById('admin-modal');
-            modal.classList.toggle('hidden');
-        }
-
-        function adminLoginSuccess() {
-            toggleAdminModal();
-            showNotification('Yönetici', 'Yönetim paneline başarıyla giriş yapıldı.', 'success');
         }
 
         function showNotification(title, message, type = 'success') {
@@ -528,26 +356,18 @@
             titleEl.textContent = title;
             msgEl.textContent = message;
 
-            if(type === 'success') {
-                iconEl.className = "w-8 h-8 rounded-xl bg-tealGreen/20 text-tealGreen flex items-center justify-center";
-                iconEl.innerHTML = '<i class="fa-solid fa-check"></i>';
-            } else {
-                iconEl.className = "w-8 h-8 rounded-xl bg-glassBlue/20 text-glassBlue flex items-center justify-center";
-                iconEl.innerHTML = '<i class="fa-solid fa-info"></i>';
-            }
-
             toast.classList.remove('translate-x-full');
             setTimeout(() => {
                 toast.classList.add('translate-x-full');
             }, 3000);
         }
 
-        // Slayt Yönetimi
+        // Slayt Döngü Mantığı
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide-item');
         const dots = document.querySelectorAll('.slide-dot');
 
-        let slideInterval = setInterval(() => {
+        setInterval(() => {
             let nextIndex = (currentSlide + 1) % slides.length;
             setSlide(nextIndex);
         }, 6000);
